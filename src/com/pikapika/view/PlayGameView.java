@@ -29,7 +29,16 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private int countClicked = 0;
     private Pikachu one;
     private Pikachu two;
+// them 2 phuong thuc getter
+    public JLabel getTimer() {
+        return timer;
+    }
 
+    public JLabel getScore() {
+        return score;
+    }
+    
+    
 
     public PlayGameView(){
         this(10,10);

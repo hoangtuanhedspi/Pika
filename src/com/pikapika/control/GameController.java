@@ -8,8 +8,8 @@ import com.pikapika.view.SplashView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 /**
  * Created by anonymousjp on 5/20/17.
  */
@@ -17,7 +17,13 @@ public class GameController extends JFrame{
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
-    private int[][] test;
+//    private int[][] test;
+    private Matrix matrix;      // @Hien add
+    private Timer timer;
+    private int countDown;      // thoi gian dem nguoc
+    private int score;          // diem
+    private int mapNumber;      // stt map
+    private int coupleDone;     // so cap da chon dung
 
     public GameController(String title) throws HeadlessException {
         super(title);
@@ -34,9 +40,10 @@ public class GameController extends JFrame{
         this.splashView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(6,7);
+        this.playGameView = new PlayGameView(8,10);
         this.playGameView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        test = new int[10][10];
+//        test = new int[10][10];
+        this.matrix = new Matrix(8, 10);    // @Hien add
 
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
@@ -61,15 +68,34 @@ public class GameController extends JFrame{
             @Override
             public void onNewGameClicked(int type) {
                 menuView.setVisible(false);
-                for (int i = 0;i < 10;i++){
-                    for (int j = 0; j < 10;j++){
-                        Random random = new Random();
-                        test[i][j] = random.nextInt(10);
-                    }
-                }
+//                for (int i = 0;i < 10;i++){
+//                    for (int j = 0; j < 10;j++){
+//                        Random random = new Random();
+//                        test[i][j] = random.nextInt(10);
+//                    }
+//                }
 
-                playGameView.renderMatrix(test);
+                playGameView.renderMatrix(matrix.getMatrix());
                 playGameView.setVisible(true);
+//                @Hien add
+                score = 0;
+                mapNumber = 1;
+                countDown = 100;
+                coupleDone = 0;
+                ActionListener timeAction = new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        --countDown;
+                        playGameView.getTimer().setText("Time: "+countDown);
+                        if(countDown == 0){
+                            JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
+                            timer.stop();
+                        }
+                    }
+                };
+                timer = new Timer(1000, timeAction);
+                timer.start();
+                
             }
 
             @Override
@@ -92,16 +118,18 @@ public class GameController extends JFrame{
 
             @Override
             public void onPauseClicked() {
+                // TODO
 
             }
 
             @Override
             public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
-                Utils.debug(getClass(),clickCounter+"");
-                Utils.debug(this.getClass(),pikachus[0].getXPoint() +":"+ pikachus[0].getYPoint()+"");
-                if (clickCounter==2){
-                    Utils.debug(this.getClass(),pikachus[1].getXPoint() +":"+ pikachus[1].getYPoint()+"");
-                }
+                // TODO
+//                Utils.debug(getClass(),clickCounter+"");
+//                Utils.debug(this.getClass(),pikachus[0].getXPoint() +":"+ pikachus[0].getYPoint()+"");
+//                if (clickCounter==2){
+//                    Utils.debug(this.getClass(),pikachus[1].getXPoint() +":"+ pikachus[1].getYPoint()+"");
+//                }
             }
         });
 

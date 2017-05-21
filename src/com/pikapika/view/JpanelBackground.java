@@ -19,7 +19,7 @@ public class JpanelBackground extends JPanel{
     public JpanelBackground(String imagePath){
         setOpaque(false);
         if(imagePath!=null)
-            this.backgroundImage = new ImageIcon(getClass().getResource(imagePath)).getImage();
+            this.backgroundImage = new ImageIcon( getClass().getResource(imagePath) ).getImage();
         else Utils.debug(getClass(),"Can't load null Image!");
     }
 
