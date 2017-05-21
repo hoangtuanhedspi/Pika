@@ -29,16 +29,6 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private int countClicked = 0;
     private Pikachu one;
     private Pikachu two;
-// them 2 phuong thuc getter
-    public JLabel getTimer() {
-        return timer;
-    }
-
-    public JLabel getScore() {
-        return score;
-    }
-    
-    
 
     public PlayGameView(){
         this(10,10);
@@ -159,7 +149,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         pikachuPanel.invalidate();
         for (int i = 0;i < row;i++){
             for (int j = 0; j < col;j++){
-                pikachuIcon[i][j] = createButton(i + 1,j+1);
+                pikachuIcon[i][j] = createButton(i ,j);
                 Icon icon = getIcon(matrix[i][j]);
                 pikachuIcon[i][j].setIcon(icon);
                 pikachuPanel.add(pikachuIcon[i][j]);
@@ -198,9 +188,32 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         this.playGameListener = playGameListener;
     }
 
+    public void updateTimer(String timer){
+        this.timer.setText(timer);
+    }
+
+    public void updateScore(String score){
+        this.score.setText(score);
+    }
+
     public interface PlayGameListener{
+
+        /**
+         *
+         */
         void onMenuClicked();
+
+        /**
+         * Được gọi khi nhấn Pause
+         */
         void onPauseClicked();
+
+        /**
+         *
+         * @param clickCounter Trả về số lần click
+         * @param pikachus Trả về array pikachu đã đuợc click @arraySize = 2
+         */
+
         void onPikachuClicked(int clickCounter, Pikachu... pikachus);
     }
 }

@@ -17,7 +17,6 @@ public class GameController extends JFrame{
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
-//    private int[][] test;
     private Matrix matrix;      // @Hien add
     private Timer timer;
     private int countDown;      // thoi gian dem nguoc
@@ -86,7 +85,7 @@ public class GameController extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
-                        playGameView.getTimer().setText("Time: "+countDown);
+                        playGameView.updateTimer("Time: "+countDown);
                         if(countDown == 0){
                             JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
                             timer.stop();
@@ -118,18 +117,22 @@ public class GameController extends JFrame{
 
             @Override
             public void onPauseClicked() {
-                // TODO
-
+                // TODO:
             }
 
             @Override
             public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
-                // TODO
-//                Utils.debug(getClass(),clickCounter+"");
-//                Utils.debug(this.getClass(),pikachus[0].getXPoint() +":"+ pikachus[0].getYPoint()+"");
-//                if (clickCounter==2){
-//                    Utils.debug(this.getClass(),pikachus[1].getXPoint() +":"+ pikachus[1].getYPoint()+"");
-//                }
+                // TODO: Check with Piakachu Algorimth
+                Utils.debug(getClass(),clickCounter+"");
+                Utils.debug(this.getClass(),pikachus[0].getXPoint() +":"+ pikachus[0].getYPoint()+"");
+                if (clickCounter==2){
+                    Utils.debug(this.getClass(),pikachus[1].getXPoint() +":"+ pikachus[1].getYPoint()+"");
+                    Utils.debug(this.getClass(),matrix.Algorithm(pikachus[0],pikachus[1])+"");
+                    if(matrix.Algorithm(pikachus[0],pikachus[1])){
+                        pikachus[0].setVisible(false); //Demo code
+                        pikachus[1].setVisible(false); // Demo code
+                    }
+                }
             }
         });
 
