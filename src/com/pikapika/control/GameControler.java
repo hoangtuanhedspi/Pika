@@ -7,6 +7,7 @@ import com.pikapika.view.SplashView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Created by anonymousjp on 5/20/17.
@@ -15,6 +16,7 @@ public class GameControler extends JFrame{
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
+    private int[][] test;
 
     public GameControler(String title) throws HeadlessException {
         super(title);
@@ -31,9 +33,9 @@ public class GameControler extends JFrame{
         this.splashView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView();
+        this.playGameView = new PlayGameView(6,8);
         this.playGameView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        this.playGameView.setVisible(true);
+
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
@@ -57,6 +59,15 @@ public class GameControler extends JFrame{
             @Override
             public void onNewGameClicked(int type) {
                 menuView.setVisible(false);
+                test = new int[10][10];
+
+                for (int i = 0;i < 10;i++){
+                    for (int j = 0; j < 10;j++){
+                        Random random = new Random();
+                        test[i][j] = random.nextInt(10);
+                    }
+                }
+                playGameView.renderMatrix(test);
                 playGameView.setVisible(true);
             }
 
@@ -77,7 +88,7 @@ public class GameControler extends JFrame{
     }
 
     public void start(){
-        //splashView.start();
+        splashView.start();
         setVisible(true);
     }
 }

@@ -14,7 +14,7 @@ import java.util.Random;
  */
 public class PlayGameView extends JpanelBackground implements ActionListener{
     private JPanel topMenuPanel;
-    private PikachuPanel pikachuPanel;
+    private JPanel pikachuPanel;
     private BorderLayout mainLayout;
     private GroupLayout topMenuLayout;
     private JButton quitPlay;
@@ -22,15 +22,30 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private JLabel timer;
     private JLabel score;
     private JButton pauseGame;
-    private int[][] test;
+    private PlayGameListener playGameListener;
+    private GridLayout pikachuLayout;
+    private Pikachu[][] pikachuIcon;
+    private int row;
+    private int col;
+    private int countClicked = 0;
+    private Pikachu one;
+    private Pikachu two;
+
 
     public PlayGameView(){
+        this(10,10);
+    }
+
+    public PlayGameView(int row, int col){
         super();
+        this.row = row;
+        this.col = col;
         setVisible(false);
         initUI();
     }
 
     private void initUI(){
+        setVisible(false);
         mainLayout = new BorderLayout();
 
         this.setLayout(mainLayout);
@@ -85,7 +100,12 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                         .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        pikachuPanel = new PikachuPanel(6,10);
+        pikachuPanel = new JPanel();
+        pikachuLayout = new GridLayout(row,col,0,0);
+        pikachuPanel.setLayout(pikachuLayout);
+        pikachuPanel.setOpaque(false);
+        setAlignmentY(JPanel.CENTER_ALIGNMENT);
+
 
         add(topMenuPanel,BorderLayout.PAGE_START);
 
@@ -95,17 +115,6 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         panel.add(pikachuPanel);
 
         add(panel,BorderLayout.CENTER);
-
-        test = new int[10][10];
-
-        for (int i = 0;i < 10;i++){
-            for (int j = 0; j < 10;j++){
-                Random random = new Random();
-                test[i][j] = random.nextInt(10);
-            }
-        }
-
-        pikachuPanel.renderMatrix(test);
     }
 
     @Override
@@ -116,11 +125,63 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
             case "Menu" :
             default: break;
         }
+        /*String btnIndex = e.getActionCommand();
+        int indexDot = btnIndex.lastIndexOf(",");
+        int x = Integer.parseInt(btnIndex.substring(0, indexDot));
+        int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
+                btnIndex.length()));
+        if (countClicked<2){
+            countClicked+=1;
+        }else {
+            countClicked = 0;
+        }
+        if(countClicked==1){
+
+        }*/
+    }
+
+    public void renderMatrix(int[][] matrix){
+        pikachuIcon = new Pikachu[row][col];
+        for (int i = 0;i < row;i++){
+            for (int j = 0; j < col;j++){
+                pikachuIcon[i][j] = createButton(i + 1,j+1);
+                Icon icon = getIcon(matrix[i][j]);
+                pikachuIcon[i][j].setIcon(icon);
+                pikachuPanel.add(pikachuIcon[i][j]);
+            }
+        }
+    }
+
+    public void updateMaxtrix(int[][] matrix){
+        for (int i = 0;i < row;i++){
+            for (int j = 0; j < col;j++){
+                pikachuIcon[i][j].setIcon(getIcon(matrix[i][j]));
+            }
+        }
+        pikachuPanel.invalidate();
+        pikachuPanel.repaint();
+    }
+
+    private Icon getIcon(int index) {
+        int width = 40, height = 40;
+        Image image = new ImageIcon(getClass().getResource(
+                "../resources/ic_" + index + ".png")).getImage();
+        Icon icon = new ImageIcon(image.getScaledInstance(width, height,
+                image.SCALE_SMOOTH));
+        return icon;
+    }
+
+    private Pikachu createButton(int x, int y) {
+        Pikachu btn = new Pikachu(x,y);
+        btn.setActionCommand(x+","+y);
+        btn.setBorder(null);
+        btn.addActionListener(this);
+        return btn;
     }
 
     public interface PlayGameListener{
         void onMenuClicked();
         void onPauseClicked();
-        void onPickachuClicked(Pikachu... pikachus);
+        void onPikachuClicked(int clickCounter, Pikachu... pikachus);
     }
 }
