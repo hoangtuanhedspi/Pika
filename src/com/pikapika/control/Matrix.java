@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pikapika.control.Matrix;
+package com.pikapika.control;
 
 import com.pikapika.view.Pikachu;
-import java.awt.Point;
 import java.util.Random;
 
 /**
