@@ -2,6 +2,7 @@ package com.pikapika.control;
 
 import com.pikapika.utils.Utils;
 import com.pikapika.view.MenuView;
+import com.pikapika.view.Pikachu;
 import com.pikapika.view.PlayGameView;
 import com.pikapika.view.SplashView;
 
@@ -12,13 +13,13 @@ import java.util.Random;
 /**
  * Created by anonymousjp on 5/20/17.
  */
-public class GameControler extends JFrame{
+public class GameController extends JFrame{
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
     private int[][] test;
 
-    public GameControler(String title) throws HeadlessException {
+    public GameController(String title) throws HeadlessException {
         super(title);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -33,8 +34,9 @@ public class GameControler extends JFrame{
         this.splashView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(6,8);
+        this.playGameView = new PlayGameView(6,7);
         this.playGameView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
+        test = new int[10][10];
 
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
@@ -59,14 +61,13 @@ public class GameControler extends JFrame{
             @Override
             public void onNewGameClicked(int type) {
                 menuView.setVisible(false);
-                test = new int[10][10];
-
                 for (int i = 0;i < 10;i++){
                     for (int j = 0; j < 10;j++){
                         Random random = new Random();
                         test[i][j] = random.nextInt(10);
                     }
                 }
+
                 playGameView.renderMatrix(test);
                 playGameView.setVisible(true);
             }
@@ -79,6 +80,24 @@ public class GameControler extends JFrame{
             @Override
             public void onQuitClicked() {
                 dispose();
+            }
+        });
+
+        this.playGameView.setPlayGameListener(new PlayGameView.PlayGameListener() {
+            @Override
+            public void onMenuClicked() {
+                playGameView.setVisible(false);
+                menuView.setVisible(true);
+            }
+
+            @Override
+            public void onPauseClicked() {
+
+            }
+
+            @Override
+            public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
+
             }
         });
 

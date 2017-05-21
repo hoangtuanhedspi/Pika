@@ -1,13 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Matrix;
-
+package com.pikapika.control;
 import java.awt.Point;
 import java.util.Random;
-
 /**
  *
  * @author Ronaldo Hanh
@@ -104,7 +97,7 @@ public class Matrix {
     /*Giai thuat kiem tra 2 diem da click vao co duong noi voi nhau hay khong */
     /*TH1: Cung nam tren 1 hang hoac 1 cot*/
     private boolean checkLineX(int y1, int y2, int x) {
-         //System.out.println("checkLineX(p1.y, p2.y, p1.x)");
+        //System.out.println("checkLineX(p1.y, p2.y, p1.x)");
         if (this.matrix[x][y1] != this.matrix[x][y2]) {
             return false;
         }
@@ -122,7 +115,7 @@ public class Matrix {
     }
 
     private boolean checkLineY(int x1, int x2, int y) {
-         //System.out.println("checkLineY(p1.y, p2.y, p1.x)");
+        //System.out.println("checkLineY(p1.y, p2.y, p1.x)");
         if (this.matrix[x1][y] != this.matrix[x2][y]) {
             return false;
         }
@@ -138,12 +131,12 @@ public class Matrix {
         }
         return true;
     }
-    /*TH2: Xet duyet cac duong di theo chieu ngang, doc trong pham vi chu 
+    /*TH2: Xet duyet cac duong di theo chieu ngang, doc trong pham vi chu
      nhat */
 
     //Xet duyet theo chieu ngang
     private boolean checkRecX(Point p1, Point p2) {
-         //System.out.println("checkRecX(p1, p2)");
+        //System.out.println("checkRecX(p1, p2)");
         if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
             return false;
         }
@@ -193,9 +186,9 @@ public class Matrix {
 
     /*TH3: Xet mo rong theo hang ngang, hang doc*/
     //Xet theo chieu ngang
-    //type = -1 la di sang trai type=1 la di sang phai 
+    //type = -1 la di sang trai type=1 la di sang phai
     private boolean checkMoreLineX(Point p1, Point p2, int type) {
-         //System.out.println("checkMoreLineX(p1, p2, "+ type + " )");
+        //System.out.println("checkMoreLineX(p1, p2, "+ type + " )");
         if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
             return false;
         }
@@ -237,7 +230,7 @@ public class Matrix {
         }
         return false;
     }
-    // Xet mo rong theo chieu doc type = 1 ( di len tren) type = -1 (di xuong 
+    // Xet mo rong theo chieu doc type = 1 ( di len tren) type = -1 (di xuong
     // duoi)
 
     private boolean checkMoreLineY(Point p1, Point p2, int type) {
@@ -284,8 +277,8 @@ public class Matrix {
         }
         return false;
     }
-    
-    
+
+
     /*Kiem tra bao ngoai*/
     private boolean checkSide(Point p1, Point p2){
         if((p1.x == p2.x) && (p1.x == 0) && (this.matrix[p1.x][p1.y] == this.matrix[p2.x][p2.y])){
@@ -302,59 +295,59 @@ public class Matrix {
         }
         return false;
     }
-    
+
     /*Algorithm cho 2 diem*/
     public boolean Algorithm(Point p1, Point p2) {
         //Check side
-         if(this.checkSide(p1, p2)){
+        if(this.checkSide(p1, p2)){
             return true;
         }
-        // Kiem tra voi hang x , cot y1,y2 
+        // Kiem tra voi hang x , cot y1,y2
         if (p1.x == p2.x) {
             if (this.checkLineX(p1.y, p2.y, p1.x)) {
-               
+
                 return true;
             }
         }
-        // Kiem tra voi cot y , hang x1,hang x2 
+        // Kiem tra voi cot y , hang x1,hang x2
         if (p1.y == p2.y) {
             if (this.checkLineY(p1.x, p2.x, p1.y)) {
-               
+
                 return true;
             }
         }
-        // Xet duong di theo chieu ngang 
+        // Xet duong di theo chieu ngang
         if (this.checkRecX(p1, p2)) {
-           
+
             return true;
         }
-        // Xet duong fi theo chieu doc 
+        // Xet duong fi theo chieu doc
         if (this.checkRecY(p1, p2)) {
-            
+
             return true;
         }
-        // xet su mo rong theo chieu ngang ben phai 
+        // xet su mo rong theo chieu ngang ben phai
         if (this.checkMoreLineX(p1, p2, 1)) {
-           
+
             return true;
         }
-        // xet su mo rong theo chieu ngang ben trai 
+        // xet su mo rong theo chieu ngang ben trai
         if (this.checkMoreLineX(p1, p2, -1)) {
             //System.out.println("checkMoreLineX(p1, p2, -1)");
             return true;
         }
-        // Xet su mo rong theo chieu doc di len tren 
+        // Xet su mo rong theo chieu doc di len tren
         if (this.checkMoreLineY(p1, p2, 1)) {
-           
+
             return true;
         }
-        // Xet su mo rong theo chieu doc di xuong duoi 
+        // Xet su mo rong theo chieu doc di xuong duoi
         if (this.checkMoreLineY(p1, p2, -1)) {
             //System.out.println("checkMoreLineY(p1, p2, -1)");
             return true;
         }
-       
-        return false; // tra ve false neu khong tim thay duong di 
+
+        return false; // tra ve false neu khong tim thay duong di
     }
 
    /* public static void main(String[] args) {

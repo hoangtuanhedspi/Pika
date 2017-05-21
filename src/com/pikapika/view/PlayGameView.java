@@ -1,13 +1,10 @@
 package com.pikapika.view;
 
-import com.pikapika.utils.Utils;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Random;
 
 /**
  * Created by anonymousjp on 5/20/17.
@@ -47,9 +44,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private void initUI(){
         setVisible(false);
         mainLayout = new BorderLayout();
-
         this.setLayout(mainLayout);
-
         this.setBackgroundImage("../resources/bg_1.png");
 
         topMenuPanel = new JPanel();
@@ -119,29 +114,39 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Utils.debug(getClass(),e.getActionCommand());
-        switch (e.getActionCommand()){
-            case "Pause" :
-            case "Menu" :
-            default: break;
-        }
-        /*String btnIndex = e.getActionCommand();
-        int indexDot = btnIndex.lastIndexOf(",");
-        int x = Integer.parseInt(btnIndex.substring(0, indexDot));
-        int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
-                btnIndex.length()));
-        if (countClicked<2){
-            countClicked+=1;
-        }else {
-            countClicked = 0;
-        }
-        if(countClicked==1){
+        if (!(e.getSource() instanceof Pikachu)){
+            switch (e.getActionCommand()){
+                case "Menu" : if (playGameListener!=null){
+                    playGameListener.onMenuClicked();
+                } break;
+                case "Pause" : if (playGameListener!=null){
+                    playGameListener.onPauseClicked();
+                } break;
+                default: break;
+            }
+        }else{
+            String btnIndex = e.getActionCommand();
+            int indexDot = btnIndex.lastIndexOf(",");
 
-        }*/
+            int x = Integer.parseInt(btnIndex.substring(0, indexDot));
+            int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
+                    btnIndex.length()));
+
+            if (countClicked<2){
+                countClicked+=1;
+            }else {
+                countClicked = 0;
+            }
+            if(countClicked==1){
+
+            }
+        }
     }
 
     public void renderMatrix(int[][] matrix){
         pikachuIcon = new Pikachu[row][col];
+        pikachuPanel.removeAll();
+        pikachuPanel.invalidate();
         for (int i = 0;i < row;i++){
             for (int j = 0; j < col;j++){
                 pikachuIcon[i][j] = createButton(i + 1,j+1);
@@ -150,6 +155,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 pikachuPanel.add(pikachuIcon[i][j]);
             }
         }
+        pikachuPanel.repaint();
     }
 
     public void updateMaxtrix(int[][] matrix){
@@ -177,6 +183,10 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         btn.setBorder(null);
         btn.addActionListener(this);
         return btn;
+    }
+
+    public void setPlayGameListener(PlayGameListener playGameListener) {
+        this.playGameListener = playGameListener;
     }
 
     public interface PlayGameListener{
