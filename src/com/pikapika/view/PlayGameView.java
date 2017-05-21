@@ -1,5 +1,7 @@
 package com.pikapika.view;
 
+import com.pikapika.utils.Utils;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -101,14 +103,12 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         pikachuPanel.setOpaque(false);
         setAlignmentY(JPanel.CENTER_ALIGNMENT);
 
-
         add(topMenuPanel,BorderLayout.PAGE_START);
-
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setOpaque(false);
+        panel.setBorder(new EmptyBorder(10,10,10,10));
         panel.add(pikachuPanel);
-
         add(panel,BorderLayout.CENTER);
     }
 
@@ -125,20 +125,21 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 default: break;
             }
         }else{
-            String btnIndex = e.getActionCommand();
-            int indexDot = btnIndex.lastIndexOf(",");
-
-            int x = Integer.parseInt(btnIndex.substring(0, indexDot));
-            int y = Integer.parseInt(btnIndex.substring(indexDot + 1,
-                    btnIndex.length()));
-
-            if (countClicked<2){
-                countClicked+=1;
-            }else {
-                countClicked = 0;
-            }
-            if(countClicked==1){
-
+            countClicked +=1;
+            switch (countClicked){
+                case 1: one = (Pikachu) e.getSource();
+                        if (playGameListener!=null)
+                            playGameListener.onPikachuClicked(countClicked,one);
+                        break;
+                case 2: if(!one.equals(e.getSource())){
+                            two = (Pikachu) e.getSource();
+                            if (playGameListener!=null)
+                                playGameListener.onPikachuClicked(countClicked,one,two);
+                        }else {
+                            Utils.debug(getClass(),"Remove border");
+                        }
+                        countClicked = 0;break;
+                default: break;
             }
         }
     }
@@ -179,7 +180,6 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
 
     private Pikachu createButton(int x, int y) {
         Pikachu btn = new Pikachu(x,y);
-        btn.setActionCommand(x+","+y);
         btn.setBorder(null);
         btn.addActionListener(this);
         return btn;

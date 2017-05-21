@@ -12,12 +12,15 @@ public class Utils {
     public static final String BT_HARD = "Hard";
     public static final String BT_SETTING = "Setting";
     public static final String BT_QUIT = "Quit Game";
+    public static final String BT_MENU = "Menu";
+    public static final String BT_PAUSE = "Pause";
     public static final boolean DEBUG = true;
 
     public static void debug(Class clz,String debug){
         if (DEBUG){
             debug = debug == null ? "Null debug string!" : debug;
-            System.out.println(clz.getCanonicalName()+": "+debug);
+            String name = clz.getCanonicalName()==null?"Debug": clz.getCanonicalName();
+            System.out.println(name+":"+debug);
         }
     }
 }

@@ -1,5 +1,7 @@
 package com.pikapika.view;
 
+import com.pikapika.utils.Utils;
+
 import javax.swing.*;
 
 /**
@@ -13,6 +15,7 @@ public class Pikachu extends JButton{
         super();
         this.xPoint = x;
         this.yPoint = y;
+        Utils.debug(getClass(),x+":"+y);
     }
 
     public int getXPoint() {
@@ -21,5 +24,13 @@ public class Pikachu extends JButton{
 
     public int getYPoint() {
         return yPoint;
+    }
+
+    public void drawBorder(){
+
+    }
+
+    public void removeBorder(){
+
     }
 }
