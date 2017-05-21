@@ -1,8 +1,10 @@
 package com.pikapika.view;
 
 import com.pikapika.utils.Utils;
+import java.awt.Color;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 /**
  * Created by anonymousjp on 5/21/17.
@@ -27,10 +29,10 @@ public class Pikachu extends JButton{
     }
 
     public void drawBorder(){
-
+        this.setBorder(new LineBorder(Color.RED, 3));
     }
 
     public void removeBorder(){
-
+        this.setBorder(null);
     }
 }

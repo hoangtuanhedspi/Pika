@@ -30,6 +30,9 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private Pikachu one;
     private Pikachu two;
 // them 2 phuong thuc getter
+    public void setCountClicked(int value){
+        this.countClicked = value;
+    }
     public JLabel getTimer() {
         return timer;
     }
@@ -70,7 +73,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         timerProgress = new JProgressBar(0,100);
         timer = new JLabel("Time: 100");
         timer.setForeground(Color.WHITE);
-        score = new JLabel("Score: 100");
+        score = new JLabel("Score: 0");
         score.setForeground(Color.WHITE);
         pauseGame = new JButton("Pause");
         pauseGame.addActionListener(this);
@@ -159,7 +162,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         pikachuPanel.invalidate();
         for (int i = 0;i < row;i++){
             for (int j = 0; j < col;j++){
-                pikachuIcon[i][j] = createButton(i + 1,j+1);
+                pikachuIcon[i][j] = createButton(i ,j);
                 Icon icon = getIcon(matrix[i][j]);
                 pikachuIcon[i][j].setIcon(icon);
                 pikachuPanel.add(pikachuIcon[i][j]);

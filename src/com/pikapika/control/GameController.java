@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.border.LineBorder;
 /**
  * Created by anonymousjp on 5/20/17.
  */
@@ -119,17 +120,42 @@ public class GameController extends JFrame{
             @Override
             public void onPauseClicked() {
                 // TODO
+                timer.stop();
 
             }
 
             @Override
             public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
                 // TODO
-//                Utils.debug(getClass(),clickCounter+"");
-//                Utils.debug(this.getClass(),pikachus[0].getXPoint() +":"+ pikachus[0].getYPoint()+"");
-//                if (clickCounter==2){
-//                    Utils.debug(this.getClass(),pikachus[1].getXPoint() +":"+ pikachus[1].getYPoint()+"");
-//                }
+                Utils.debug(getClass(),clickCounter+"");
+                if(clickCounter == 1){
+                    Utils.debug(this.getClass(),""+matrix.getXY(pikachus[0]));
+                }
+                if (clickCounter==2){
+                    Utils.debug(this.getClass(),""+matrix.getXY(pikachus[1]));
+
+                }
+                
+                if(clickCounter == 1){
+                    pikachus[0].drawBorder();
+                }
+                else if(clickCounter == 2){
+                    pikachus[1].drawBorder();
+                    if(matrix.Algorithm(pikachus[0], pikachus[1])){
+                        matrix.setXY(pikachus[0], 0);
+                        matrix.setXY(pikachus[1], 0);
+                        pikachus[0].setVisible(false);
+                        pikachus[1].setVisible(false);
+                        coupleDone++;
+                        score += 100;
+                        playGameView.getScore().setText("Score: "+score);
+                    }
+                    else{
+                        pikachus[0].removeBorder();
+                        pikachus[1].removeBorder();
+                        playGameView.setCountClicked(0);
+                    }
+                }
             }
         });
 
