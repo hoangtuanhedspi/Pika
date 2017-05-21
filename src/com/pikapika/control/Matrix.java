@@ -1,6 +1,14 @@
-package com.pikapika.control;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.pikapika.control.Matrix;
+
+import com.pikapika.view.Pikachu;
 import java.awt.Point;
 import java.util.Random;
+
 /**
  *
  * @author Ronaldo Hanh
@@ -97,7 +105,7 @@ public class Matrix {
     /*Giai thuat kiem tra 2 diem da click vao co duong noi voi nhau hay khong */
     /*TH1: Cung nam tren 1 hang hoac 1 cot*/
     private boolean checkLineX(int y1, int y2, int x) {
-        //System.out.println("checkLineX(p1.y, p2.y, p1.x)");
+         //System.out.println("checkLineX(p1.y, p2.y, p1.x)");
         if (this.matrix[x][y1] != this.matrix[x][y2]) {
             return false;
         }
@@ -115,7 +123,7 @@ public class Matrix {
     }
 
     private boolean checkLineY(int x1, int x2, int y) {
-        //System.out.println("checkLineY(p1.y, p2.y, p1.x)");
+         //System.out.println("checkLineY(p1.y, p2.y, p1.x)");
         if (this.matrix[x1][y] != this.matrix[x2][y]) {
             return false;
         }
@@ -131,28 +139,28 @@ public class Matrix {
         }
         return true;
     }
-    /*TH2: Xet duyet cac duong di theo chieu ngang, doc trong pham vi chu
+    /*TH2: Xet duyet cac duong di theo chieu ngang, doc trong pham vi chu 
      nhat */
 
     //Xet duyet theo chieu ngang
-    private boolean checkRecX(Point p1, Point p2) {
-        //System.out.println("checkRecX(p1, p2)");
-        if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
+    private boolean checkRecX(Pikachu p1, Pikachu p2) {
+         //System.out.println("checkRecX(p1, p2)");
+        if (this.matrix[p1.getXPoint()][p1.getYPoint()] != this.matrix[p2.getXPoint()][p2.getYPoint()]) {
             return false;
         }
-        Point pMinY = p1;
-        Point pMaxY = p2;
-        if (p1.y > p2.y) {
+        Pikachu pMinY = p1;
+        Pikachu pMaxY = p2;
+        if (p1.getYPoint() > p2.getYPoint()) {
             pMinY = p2;
             pMaxY = p1;
         }
-        for (int i = pMinY.y; i < pMaxY.y; i++) {
-            if (i > pMinY.y && this.matrix[pMinY.x][i] != CONST_VALUE) {
+        for (int i = pMinY.getYPoint(); i < pMaxY.getYPoint(); i++) {
+            if (i > pMinY.getYPoint() && this.matrix[pMinY.getXPoint()][i] != CONST_VALUE) {
                 return false;
             }
-            if ((this.matrix[pMaxY.x][i] == CONST_VALUE || i == pMaxY.y)
-                    && checkLineX(i, pMaxY.y, pMaxY.x)
-                    && checkLineY(pMinY.x, pMaxY.x, i)) {
+            if ((this.matrix[pMaxY.getXPoint()][i] == CONST_VALUE || i == pMaxY.getYPoint())
+                    && checkLineX(i, pMaxY.getYPoint(), pMaxY.getXPoint())
+                    && checkLineY(pMinY.getXPoint(), pMaxY.getXPoint(), i)) {
                 return true;
             }
         }
@@ -160,24 +168,24 @@ public class Matrix {
     }
 
     //Xet duyet theo chieu doc hinh chu nhat
-    private boolean checkRecY(Point p1, Point p2) {
+    private boolean checkRecY(Pikachu p1, Pikachu p2) {
         //System.out.println("checkRecY(p1, p2)");
-        if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
+        if (this.matrix[p1.getXPoint()][p1.getYPoint()] != this.matrix[p2.getXPoint()][p2.getYPoint()]) {
             return false;
         }
-        Point pMinX = p1;
-        Point pMaxX = p2;
-        if (p1.x > p2.x) {
+        Pikachu pMinX = p1;
+        Pikachu pMaxX = p2;
+        if (p1.getXPoint() > p2.getXPoint()) {
             pMinX = p2;
             pMaxX = p1;
         }
-        for (int i = pMinX.x; i < pMaxX.x; i++) {
-            if (i > pMinX.x && this.matrix[i][pMinX.y] != CONST_VALUE) {
+        for (int i = pMinX.getXPoint(); i < pMaxX.getXPoint(); i++) {
+            if (i > pMinX.getXPoint() && this.matrix[i][pMinX.getYPoint()] != CONST_VALUE) {
                 return false;
             }
-            if ((this.matrix[i][pMaxX.y] == CONST_VALUE || i == pMaxX.x)
-                    && checkLineX(pMinX.y, pMaxX.y, i)
-                    && checkLineY(i, pMaxX.x, pMaxX.y)) {
+            if ((this.matrix[i][pMaxX.getYPoint()] == CONST_VALUE || i == pMaxX.getXPoint())
+                    && checkLineX(pMinX.getYPoint(), pMaxX.getYPoint(), i)
+                    && checkLineY(i, pMaxX.getXPoint(), pMaxX.getYPoint())) {
                 return true;
             }
         }
@@ -186,27 +194,27 @@ public class Matrix {
 
     /*TH3: Xet mo rong theo hang ngang, hang doc*/
     //Xet theo chieu ngang
-    //type = -1 la di sang trai type=1 la di sang phai
-    private boolean checkMoreLineX(Point p1, Point p2, int type) {
-        //System.out.println("checkMoreLineX(p1, p2, "+ type + " )");
-        if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
+    //type = -1 la di sang trai type=1 la di sang phai 
+    private boolean checkMoreLineX(Pikachu p1, Pikachu p2, int type) {
+         //System.out.println("checkMoreLineX(p1, p2, "+ type + " )");
+        if (this.matrix[p1.getXPoint()][p1.getYPoint()] != this.matrix[p2.getXPoint()][p2.getYPoint()]) {
             return false;
         }
-        Point pMinY = p1, pMaxY = p2;
-        if (p1.y > p2.y) {
+        Pikachu pMinY = p1, pMaxY = p2;
+        if (p1.getYPoint() > p2.getYPoint()) {
             pMinY = p2;
             pMaxY = p1;
         }
-        int y = pMaxY.y + type;
-        int _row = pMinY.x;
-        int colFinish = pMaxY.y;
+        int y = pMaxY.getYPoint() + type;
+        int _row = pMinY.getXPoint();
+        int colFinish = pMaxY.getYPoint();
         if (type == -1) {
-            colFinish = pMinY.y;
-            y = pMinY.y + type;
-            _row = pMaxY.x;
+            colFinish = pMinY.getYPoint();
+            y = pMinY.getYPoint() + type;
+            _row = pMaxY.getXPoint();
         }
-        if ((this.matrix[_row][colFinish] == CONST_VALUE || pMinY.y == pMaxY.y)
-                && checkLineX(pMinY.y, pMaxY.y, _row)) {
+        if ((this.matrix[_row][colFinish] == CONST_VALUE || pMinY.getYPoint() == pMaxY.getYPoint())
+                && checkLineX(pMinY.getYPoint(), pMaxY.getYPoint(), _row)) {
             //System.out.println(pMinY.x + "  " + y);
             if (y > this.col - 1) {
                 return false;
@@ -214,9 +222,9 @@ public class Matrix {
             if (y < 0) {
                 return false;
             }
-            while (this.matrix[pMinY.x][y] == CONST_VALUE
-                    && this.matrix[pMaxY.x][y] == CONST_VALUE) {
-                if (checkLineY(pMinY.x, pMaxY.x, y)) {
+            while (this.matrix[pMinY.getXPoint()][y] == CONST_VALUE
+                    && this.matrix[pMaxY.getXPoint()][y] == CONST_VALUE) {
+                if (checkLineY(pMinY.getXPoint(), pMaxY.getXPoint(), y)) {
                     return true;
                 }
                 y += type;
@@ -230,29 +238,29 @@ public class Matrix {
         }
         return false;
     }
-    // Xet mo rong theo chieu doc type = 1 ( di len tren) type = -1 (di xuong
+    // Xet mo rong theo chieu doc type = 1 ( di len tren) type = -1 (di xuong 
     // duoi)
 
-    private boolean checkMoreLineY(Point p1, Point p2, int type) {
+    private boolean checkMoreLineY(Pikachu p1, Pikachu p2, int type) {
         //System.out.println("checkMoreLineY(p1, p2, "+ type + " )");
-        if (this.matrix[p1.x][p1.y] != this.matrix[p2.x][p2.y]) {
+        if (this.matrix[p1.getXPoint()][p1.getYPoint()] != this.matrix[p2.getXPoint()][p2.getYPoint()]) {
             return false;
         }
-        Point pMinX = p1, pMaxX = p2;
-        if (p1.x > p2.x) {
+        Pikachu pMinX = p1, pMaxX = p2;
+        if (p1.getXPoint() > p2.getXPoint()) {
             pMinX = p2;
             pMaxX = p1;
         }
-        int x = pMaxX.x + type;
-        int _col = pMinX.y;
-        int rowFinish = pMaxX.x;
+        int x = pMaxX.getXPoint() + type;
+        int _col = pMinX.getYPoint();
+        int rowFinish = pMaxX.getXPoint();
         if (type == -1) {
-            rowFinish = pMinX.x;
-            x = pMinX.x + type;
-            _col = pMaxX.y;
+            rowFinish = pMinX.getXPoint();
+            x = pMinX.getXPoint() + type;
+            _col = pMaxX.getYPoint();
         }
-        if ((this.matrix[rowFinish][_col] == CONST_VALUE || pMinX.x == pMaxX.x)
-                && checkLineY(pMinX.x, pMaxX.x, _col)) {
+        if ((this.matrix[rowFinish][_col] == CONST_VALUE || pMinX.getXPoint() == pMaxX.getXPoint())
+                && checkLineY(pMinX.getXPoint(), pMaxX.getXPoint(), _col)) {
             //System.out.println(x + "  " + pMinX.y);
             if (x > this.row - 1) {
                 return false;
@@ -260,9 +268,9 @@ public class Matrix {
             if (x < 0) {
                 return false;
             }
-            while (this.matrix[x][pMinX.y] == CONST_VALUE
-                    && this.matrix[x][pMaxX.y] == CONST_VALUE) {
-                if (checkLineX(pMinX.y, pMaxX.y, x)) {
+            while (this.matrix[x][pMinX.getYPoint()] == CONST_VALUE
+                    && this.matrix[x][pMaxX.getYPoint()] == CONST_VALUE) {
+                if (checkLineX(pMinX.getYPoint(), pMaxX.getYPoint(), x)) {
                     return true;
                 }
                 x += type;
@@ -277,77 +285,77 @@ public class Matrix {
         }
         return false;
     }
-
-
+    
+    
     /*Kiem tra bao ngoai*/
-    private boolean checkSide(Point p1, Point p2){
-        if((p1.x == p2.x) && (p1.x == 0) && (this.matrix[p1.x][p1.y] == this.matrix[p2.x][p2.y])){
+    private boolean checkSide(Pikachu p1, Pikachu p2){
+        if((p1.getXPoint() == p2.getXPoint()) && (p1.getXPoint() == 0) && (this.matrix[p1.getXPoint()][p1.getYPoint()] == this.matrix[p2.getXPoint()][p2.getYPoint()])){
             return true;
         }
-        if((p1.x == p2.x) && (p1.x == row - 1) && (this.matrix[p1.x][p1.y] == this.matrix[p2.x][p2.y])){
+        if((p1.getXPoint() == p2.getXPoint()) && (p1.getXPoint() == row - 1) && (this.matrix[p1.getXPoint()][p1.getYPoint()] == this.matrix[p2.getXPoint()][p2.getYPoint()])){
             return true;
         }
-        if((p1.y == p2.y) && (p1.y == col - 1) && (this.matrix[p1.x][p1.y] == this.matrix[p2.x][p2.y])){
+        if((p1.getYPoint() == p2.getYPoint()) && (p1.getYPoint() == col - 1) && (this.matrix[p1.getXPoint()][p1.getYPoint()] == this.matrix[p2.getXPoint()][p2.getYPoint()])){
             return true;
         }
-        if((p1.y == p2.y) && (p1.y == 0) && (this.matrix[p1.x][p1.y] == this.matrix[p2.x][p2.y])){
+        if((p1.getYPoint() == p2.getYPoint()) && (p1.getYPoint() == 0) && (this.matrix[p1.getXPoint()][p1.getYPoint()] == this.matrix[p2.getXPoint()][p2.getYPoint()])){
             return true;
         }
         return false;
     }
-
+    
     /*Algorithm cho 2 diem*/
-    public boolean Algorithm(Point p1, Point p2) {
+    public boolean Algorithm(Pikachu p1, Pikachu p2) {
         //Check side
-        if(this.checkSide(p1, p2)){
+         if(this.checkSide(p1, p2)){
             return true;
         }
-        // Kiem tra voi hang x , cot y1,y2
-        if (p1.x == p2.x) {
-            if (this.checkLineX(p1.y, p2.y, p1.x)) {
-
+        // Kiem tra voi hang x , cot y1,y2 
+        if (p1.getXPoint() == p2.getXPoint()) {
+            if (this.checkLineX(p1.getYPoint(), p2.getYPoint(), p1.getXPoint())) {
+               
                 return true;
             }
         }
-        // Kiem tra voi cot y , hang x1,hang x2
-        if (p1.y == p2.y) {
-            if (this.checkLineY(p1.x, p2.x, p1.y)) {
-
+        // Kiem tra voi cot y , hang x1,hang x2 
+        if (p1.getYPoint() == p2.getYPoint()) {
+            if (this.checkLineY(p1.getXPoint(), p2.getXPoint(), p1.getYPoint())) {
+               
                 return true;
             }
         }
-        // Xet duong di theo chieu ngang
+        // Xet duong di theo chieu ngang 
         if (this.checkRecX(p1, p2)) {
-
+           
             return true;
         }
-        // Xet duong fi theo chieu doc
+        // Xet duong fi theo chieu doc 
         if (this.checkRecY(p1, p2)) {
-
+            
             return true;
         }
-        // xet su mo rong theo chieu ngang ben phai
+        // xet su mo rong theo chieu ngang ben phai 
         if (this.checkMoreLineX(p1, p2, 1)) {
-
+           
             return true;
         }
-        // xet su mo rong theo chieu ngang ben trai
+        // xet su mo rong theo chieu ngang ben trai 
         if (this.checkMoreLineX(p1, p2, -1)) {
             //System.out.println("checkMoreLineX(p1, p2, -1)");
             return true;
         }
-        // Xet su mo rong theo chieu doc di len tren
+        // Xet su mo rong theo chieu doc di len tren 
         if (this.checkMoreLineY(p1, p2, 1)) {
-
+           
             return true;
         }
-        // Xet su mo rong theo chieu doc di xuong duoi
+        // Xet su mo rong theo chieu doc di xuong duoi 
         if (this.checkMoreLineY(p1, p2, -1)) {
             //System.out.println("checkMoreLineY(p1, p2, -1)");
             return true;
         }
-
-        return false; // tra ve false neu khong tim thay duong di
+       
+        return false; // tra ve false neu khong tim thay duong di 
     }
 
    /* public static void main(String[] args) {
@@ -362,12 +370,8 @@ public class Matrix {
                 }
             }
         }
-        Point p1 = new Point();
-        Point p2 = new Point();
-        p1.x = 0;
-        p1.y = 0;
-        p2.x = 3;
-        p2.y = 0;
-        //System.out.println(m.Algorithm(p1, p2));
+        Pikachu p1 = new Pikachu(0, 0);
+        Pikachu p2 = new Pikachu(3, 0);
+        System.out.println(m.Algorithm(p1, p2));
     }*/
 }
