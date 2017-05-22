@@ -10,10 +10,10 @@ import java.net.URL;
  * Created by anonymousjp on 5/21/17.
  */
 public class JpanelBackground extends JPanel{
-    private Image backgroundImage = null;
+    protected Image backgroundImage = null;
 
     public JpanelBackground(){
-
+        this(null);
     }
 
     public JpanelBackground(String imagePath){

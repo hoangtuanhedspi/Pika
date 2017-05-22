@@ -149,9 +149,11 @@ public class GameController extends JFrame {
                 }
                 countDown = countDown2;
                 playGameView.updateScore("Score: "+score);
+
                 playGameView.updateTimer("Time: "+countDown);
                 playGameView.updateMapNum("Map: "+(mapNumber+1));
-                ActionListener timeAction = new ActionListener() {
+
+                timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
@@ -246,15 +248,12 @@ public class GameController extends JFrame {
                                 JOptionPane.showMessageDialog(null, " CHUC MUNG WINNER !");
                                 playGameView.setVisible(false);
                                 menuView.setVisible(true);
-
                             }
-
                         }
                     } else { // 2 pikachu khác nhau
                         pikachus[0].removeBorder();
                         pikachus[1].removeBorder();
                         playGameView.setCountClicked(0);
-
                     }
                 }
             }

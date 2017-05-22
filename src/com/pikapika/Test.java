@@ -4,21 +4,17 @@ package com.pikapika;
  * Created by anonymousjp on 5/20/17.
  */
 
-import com.pikapika.view.PlayGameView;
+import com.pikapika.view.JpanelBackground;
 
 import javax.swing.*;
-
-import static com.pikapika.utils.Utils.MAP_COL;
-import static com.pikapika.utils.Utils.MAP_ROW;
 
 public class Test extends JFrame{
 
     public static void main(String[] args) {
         Test t = new Test();
-        PlayGameView view = new PlayGameView(MAP_ROW,MAP_COL);
-        view.setSize(720,640);
-        t.add(view);
-        t.setSize(720,640);
+        t.setSize(720,460);
+        JpanelBackground background = new JpanelBackground("../resources/bg_0.png");
+        t.add(background);
         t.setVisible(true);
     }
 
