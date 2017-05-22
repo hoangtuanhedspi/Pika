@@ -41,9 +41,9 @@ public class GameController extends JFrame {
         this.splashView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(8, 10); 
+        this.playGameView = new PlayGameView(4, 6); 
         this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.matrix = new Matrix(8, 10);
+        this.matrix = new Matrix(4, 6);
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
@@ -75,6 +75,8 @@ public class GameController extends JFrame {
                 mapNumber = 0;
                 countDown = 100;
                 coupleDone = 0;
+                playGameView.updateScore("Score: "+score);
+                playGameView.updateTimer("Time: "+countDown);
                 ActionListener timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -139,18 +141,20 @@ public class GameController extends JFrame {
                     if (matrix.algorithm(pikachus[0], pikachus[1])) {
                         matrix.setXY(pikachus[0], 0);
                         matrix.setXY(pikachus[1], 0);
+                        pikachus[0].removeBorder();
+                        pikachus[1].removeBorder();
                         pikachus[0].setVisible(false);
                         pikachus[1].setVisible(false);
                         coupleDone++;
                         score += 100;
                         playGameView.getScore().setText("Score: " + score);
-                        if (coupleDone == (matrix.getRow()) * (matrix.getCol()) / 2) {
+                        if (coupleDone == (matrix.getRow()-2) * (matrix.getCol()-2) / 2) {
                             ++mapNumber;
                             if (mapNumber < 3) {  // tinh tu 0, 1, 2
-                                countDown -= 15 * mapNumber;
+                                countDown = 100 - 15 * mapNumber;
                                 String timeStr = playGameView.getTimer().getText();
                                 int timeCur = Integer.parseInt(timeStr.substring(6));
-                                score = timeCur * 10 + 500;
+                                score += timeCur * 10 + 500;
                                 coupleDone = 0;
                                 
                                 // TODO: Chuyen map moi
@@ -161,6 +165,11 @@ public class GameController extends JFrame {
                             }
                             else{  // mapNumber == 3
                                 // TODO : chuc mung chien thang!
+                                timer.stop();
+                                JOptionPane.showMessageDialog(null, " CHUC MUNG WINNER !");
+                                playGameView.setVisible(false);
+                                menuView.setVisible(true);
+                                
                             }
 
                         }
