@@ -190,7 +190,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         );
 
         pikachuPanel = new JPanel();
-        pikachuLayout = new GridLayout(row,col,0,0);
+        pikachuLayout = new GridLayout(row-2,col-2,0,0);
         pikachuPanel.setLayout(pikachuLayout);
         pikachuPanel.setOpaque(false);
         setAlignmentY(JPanel.CENTER_ALIGNMENT);
@@ -243,8 +243,8 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         pikachuIcon = new Pikachu[row][col];
         pikachuPanel.removeAll();
         pikachuPanel.invalidate();
-        for (int i = 0;i < row;i++){
-            for (int j = 0; j < col;j++){
+        for (int i = 1;i <= row-2; i++){
+            for (int j = 1; j <= col-2; j++){
                 pikachuIcon[i][j] = createButton(i ,j);
                 Icon icon = getIcon(matrix[i][j]);
                 pikachuIcon[i][j].setIcon(icon);
@@ -256,9 +256,10 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     }
 
     public void updateMap(int[][] matrix){
-        for (int i = 0;i < row;i++){
-            for (int j = 0; j < col;j++){
+        for (int i = 1;i <= row-2; i++){
+            for (int j = 1; j <= col-2; j++){
                 pikachuIcon[i][j].setIcon(getIcon(matrix[i][j]));
+                pikachuIcon[i][j].setVisible(true);
             }
         }
         pikachuPanel.invalidate();
