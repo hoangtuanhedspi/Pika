@@ -29,7 +29,7 @@ public class Pikachu extends JButton{
     }
 
     public void drawBorder(){
-        this.setBorder(new LineBorder(Color.RED, 3));
+        this.setBorder(new LineBorder(Color.RED, 2));
     }
 
     public void removeBorder(){

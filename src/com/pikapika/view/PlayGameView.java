@@ -29,6 +29,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private int countClicked = 0;
     private Pikachu one;
     private Pikachu two;
+
 // them 2 phuong thuc getter
     public void setCountClicked(int value){
         this.countClicked = value;
@@ -40,8 +41,6 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     public JLabel getScore() {
         return score;
     }
-    
-    
 
     public PlayGameView(){
         this(10,10);
@@ -137,7 +136,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 default: break;
             }
         }else{
-            countClicked +=1;
+            ++countClicked;
             switch (countClicked){
                 case 1: one = (Pikachu) e.getSource();
                         if (playGameListener!=null)
@@ -149,8 +148,10 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                                 playGameListener.onPikachuClicked(countClicked,one,two);
                         }else {
                             Utils.debug(getClass(),"Remove border");
+                            one.removeBorder();
                         }
-                        countClicked = 0;break;
+                        countClicked = 0;
+                        break;
                 default: break;
             }
         }
@@ -201,9 +202,32 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         this.playGameListener = playGameListener;
     }
 
+    public void updateTimer(String timer){
+        this.timer.setText(timer);
+    }
+
+    public void updateScore(String score){
+        this.score.setText(score);
+    }
+
     public interface PlayGameListener{
+
+        /**
+         *
+         */
         void onMenuClicked();
+
+        /**
+         * Được gọi khi nhấn Pause
+         */
         void onPauseClicked();
+
+        /**
+         *
+         * @param clickCounter Trả về số lần click
+         * @param pikachus Trả về array pikachu đã đuợc click @arraySize = 2
+         */
+
         void onPikachuClicked(int clickCounter, Pikachu... pikachus);
     }
 }

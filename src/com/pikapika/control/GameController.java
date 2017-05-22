@@ -18,7 +18,6 @@ public class GameController extends JFrame{
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
-//    private int[][] test;
     private Matrix matrix;      // @Hien add
     private Timer timer;
     private int countDown;      // thoi gian dem nguoc
@@ -87,7 +86,7 @@ public class GameController extends JFrame{
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
-                        playGameView.getTimer().setText("Time: "+countDown);
+                        playGameView.updateTimer("Time: "+countDown);
                         if(countDown == 0){
                             JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
                             timer.stop();
@@ -121,11 +120,11 @@ public class GameController extends JFrame{
             public void onPauseClicked() {
                 // TODO
                 timer.stop();
-
             }
 
             @Override
             public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
+
                 // TODO
                 Utils.debug(getClass(),clickCounter+"");
                 if(clickCounter == 1){
@@ -154,6 +153,7 @@ public class GameController extends JFrame{
                         pikachus[0].removeBorder();
                         pikachus[1].removeBorder();
                         playGameView.setCountClicked(0);
+
                     }
                 }
             }
