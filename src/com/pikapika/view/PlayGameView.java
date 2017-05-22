@@ -63,6 +63,11 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     /**
      *
      */
+    private JLabel mapCount;
+
+    /**
+     *
+     */
     private PlayGameListener playGameListener;
 
     /**
@@ -148,6 +153,9 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         score = new JLabel("Score: 0");
         score.setForeground(Color.WHITE);
 
+        mapCount = new JLabel("Map: 1");
+        mapCount.setForeground(Color.WHITE);
+
         pauseGame = new JButton();
         pauseGame.addActionListener(this);
         Image img = new ImageIcon(getClass().getResource(
@@ -168,6 +176,8 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 .addGroup(topMenuLayout.createSequentialGroup()
                 .addComponent(timer)
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(mapCount)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(score))
                 .addComponent(timerProgress, GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -179,6 +189,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 .addGroup(topMenuLayout.createSequentialGroup()
                 .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                 .addComponent(timer)
+                .addComponent(mapCount)
                 .addComponent(score, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(timerProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -259,6 +270,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         for (int i = 1;i <= row-2; i++){
             for (int j = 1; j <= col-2; j++){
                 pikachuIcon[i][j].setIcon(getIcon(matrix[i][j]));
+                pikachuIcon[i][j].setVisible(true);
             }
         }
         pikachuPanel.invalidate();
