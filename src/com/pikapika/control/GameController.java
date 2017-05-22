@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 import javax.swing.border.LineBorder;
 
 /**
@@ -42,8 +43,7 @@ public class GameController extends JFrame {
         this.menuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         this.playGameView = new PlayGameView(8, 10); 
         this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-//        test = new int[10][10];
-        this.matrix = new Matrix(8, 10);    // @Hien add
+        this.matrix = new Matrix(8, 10);
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
@@ -67,16 +67,10 @@ public class GameController extends JFrame {
             @Override
             public void onNewGameClicked(int type) {
                 menuView.setVisible(false);
-//                for (int i = 0;i < 10;i++){
-//                    for (int j = 0; j < 10;j++){
-//                        Random random = new Random();
-//                        test[i][j] = random.nextInt(10);
-//                    }
-//                }
-
-                playGameView.renderMatrix(matrix.getMatrix());
+                playGameView.renderMap(matrix.getMatrix());
+                int i = (new Random()).nextInt(5);
+                playGameView.setBackgroundImage("../resources/bg_"+i+".png");
                 playGameView.setVisible(true);
-//                @Hien add
                 score = 0;
                 mapNumber = 0;
                 countDown = 100;
@@ -85,6 +79,7 @@ public class GameController extends JFrame {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
+                        playGameView.updateProgress(countDown);
                         playGameView.updateTimer("Time: " + countDown);
                         if (countDown == 0) {
                             JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
@@ -110,15 +105,18 @@ public class GameController extends JFrame {
 
         this.playGameView.setPlayGameListener(new PlayGameView.PlayGameListener() {
             @Override
-            public void onMenuClicked() {
-                playGameView.setVisible(false);
-                menuView.setVisible(true);
+            public void onReplayClicked() {
+                //TODO: Resum old game
             }
 
             @Override
-            public void onPauseClicked() {
-                // TODO
-                timer.stop();
+            public void onPauseClicked(boolean isPlaying) {
+                Utils.debug(GameController.this.getClass(),isPlaying+"");
+                if (!isPlaying){
+                    timer.stop();
+                    menuView.setVisible(true);
+                    playGameView.setVisible(false);
+                }
             }
 
             @Override
@@ -138,7 +136,7 @@ public class GameController extends JFrame {
                     pikachus[0].drawBorder(Color.red);
                 } else if (clickCounter == 2) {
                     pikachus[1].drawBorder(Color.red);
-                    if (matrix.Algorithm(pikachus[0], pikachus[1])) {
+                    if (matrix.algorithm(pikachus[0], pikachus[1])) {
                         matrix.setXY(pikachus[0], 0);
                         matrix.setXY(pikachus[1], 0);
                         pikachus[0].setVisible(false);
@@ -156,8 +154,7 @@ public class GameController extends JFrame {
                                 coupleDone = 0;
                                 
                                 // TODO: Chuyen map moi
-                                playGameView.removeAll();
-                                playGameView = new PlayGameView(8, 10);
+                                playGameView.updateMap(matrix.renderMatrix());
                                 playGameView.updateScore("Score: "+score);
                                 playGameView.updateTimer("Time: "+countDown);
                                 playGameView.validate();

@@ -53,8 +53,8 @@ public class Matrix {
     }
     // them phuong thuc set value tai toa do cua pikachu
     public void setXY( Pikachu pikachu, int value){
-        this.matrix[pikachu.getXPoint()][pikachu.getYPoint()] = value;
-    }
+            this.matrix[pikachu.getXPoint()][pikachu.getYPoint()] = value;
+        }
     public int getXY( Pikachu pikachu){
         return matrix[pikachu.getXPoint()][pikachu.getYPoint()];
     }
@@ -62,17 +62,21 @@ public class Matrix {
     public Matrix(int row, int col) {
         this.setCol(col);
         this.setRow(row);
-        createMatrix();
+        renderMatrix();
     }
 
-    /*Tao Random Matrix*/
-    public void createMatrix() {
+    public void updateSize(int row, int col){
+        this.row = row;
+        this.col = col;
+    }
+
+    public int[][] renderMatrix() {
         this.matrix = new int[row][col];
         /* Tao random Matrix */
         Random random = new Random();
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
-                matrix[i][j] = random.nextInt(row * col / 4 - 1) + 1;
+                matrix[i][j] = random.nextInt(35) + 1;
             }
         }
 
@@ -82,9 +86,10 @@ public class Matrix {
                 change(i);
             }
         }
+
+        return this.matrix;
     }
 
-    /*Dem so phan tu giong nhau */
     private int demPT(int value) {
         int count = 0;
         for (int i = 0; i < row; i++) {
@@ -311,7 +316,7 @@ public class Matrix {
     }
     
     /*Algorithm cho 2 diem*/
-    public boolean Algorithm(Pikachu p1, Pikachu p2) {
+    public boolean algorithm(Pikachu p1, Pikachu p2) {
         //Check side
          if(this.checkSide(p1, p2)){
             return true;

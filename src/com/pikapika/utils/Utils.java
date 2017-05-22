@@ -12,8 +12,9 @@ public class Utils {
     public static final String BT_HARD = "Hard";
     public static final String BT_SETTING = "Setting";
     public static final String BT_QUIT = "Quit Game";
-    public static final String BT_MENU = "Menu";
-    public static final String BT_PAUSE = "Pause";
+    public static final String BT_RESUM = "resum";
+    public static final String BT_REPLAY = "replay";
+    public static final String BT_PAUSE = "pause";
     public static final boolean DEBUG = true;
 
     public static void debug(Class clz,String debug){

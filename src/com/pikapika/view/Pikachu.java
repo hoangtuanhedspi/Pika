@@ -17,7 +17,6 @@ public class Pikachu extends JButton{
         super();
         this.xPoint = x;
         this.yPoint = y;
-        Utils.debug(getClass(),x+":"+y);
     }
 
     public int getXPoint() {

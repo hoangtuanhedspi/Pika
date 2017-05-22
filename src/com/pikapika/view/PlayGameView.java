@@ -8,39 +8,101 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static com.pikapika.utils.Utils.BT_PAUSE;
+import static com.pikapika.utils.Utils.BT_RESUM;
+
 /**
  * Created by anonymousjp on 5/20/17.
  */
 public class PlayGameView extends JpanelBackground implements ActionListener{
+    /**
+     *
+     */
     private JPanel topMenuPanel;
+
+    /**
+     *
+     */
     private JPanel pikachuPanel;
+
+    /**
+     *
+     */
     private BorderLayout mainLayout;
+
+    /**
+     *
+     */
     private GroupLayout topMenuLayout;
-    private JButton quitPlay;
+
+    /**
+     *
+     */
+    private JButton resumGame;
+
+    /**
+     *
+     */
     private JProgressBar timerProgress;
+
+    /**
+     *
+     */
     private JLabel timer;
+
+    /**
+     *
+     */
     private JLabel score;
+
+    /**
+     *
+     */
     private JButton pauseGame;
+
+    /**
+     *
+     */
     private PlayGameListener playGameListener;
+
+    /**
+     *
+     */
     private GridLayout pikachuLayout;
+
+    /**
+     *
+     */
     private Pikachu[][] pikachuIcon;
+
+    /**
+     *
+     */
     private int row;
+
+    /**
+     *
+     */
     private int col;
+
+    /**
+     *
+     */
     private int countClicked = 0;
+
+    /**
+     *
+     */
     private Pikachu one;
+
+    /**
+     *
+     */
     private Pikachu two;
 
-// them 2 phuong thuc getter
-    public void setCountClicked(int value){
-        this.countClicked = value;
-    }
-    public JLabel getTimer() {
-        return timer;
-    }
+    private boolean isPlaying = true;
 
-    public JLabel getScore() {
-        return score;
-    }
+    // them 2 phuong thuc getter
 
     public PlayGameView(){
         this(10,10);
@@ -67,45 +129,64 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         topMenuPanel.setOpaque(false);
         topMenuPanel.setBorder(new EmptyBorder(5,20,5,20));
 
-        quitPlay = new JButton("Menu");
-        quitPlay.addActionListener(this);
+        resumGame = new JButton();
+        resumGame.addActionListener(this);
+        Image image = new ImageIcon(getClass().getResource(
+                "../resources/resum.png")).getImage();
+        Icon icon = new ImageIcon(image.getScaledInstance(40, 40, image.SCALE_SMOOTH));
+        resumGame.setIcon(icon);
+
+        resumGame.setMargin(new Insets(0, 0, 0, 0));
+        resumGame.setBorder(null);
+        resumGame.setActionCommand(BT_RESUM);
+
         timerProgress = new JProgressBar(0,100);
+        timerProgress.setValue(100);
         timer = new JLabel("Time: 100");
         timer.setForeground(Color.WHITE);
+
         score = new JLabel("Score: 0");
         score.setForeground(Color.WHITE);
-        pauseGame = new JButton("Pause");
+
+        pauseGame = new JButton();
         pauseGame.addActionListener(this);
+        Image img = new ImageIcon(getClass().getResource(
+                "../resources/pause.png")).getImage();
+        Icon ico = new ImageIcon(img.getScaledInstance(40, 40, img.SCALE_SMOOTH));
+        pauseGame.setIcon(ico);
+        pauseGame.setMargin(new Insets(0, 0, 0, 0));
+        pauseGame.setBorder(null);
+        pauseGame.setActionCommand(BT_PAUSE);
 
         topMenuPanel.setLayout(topMenuLayout);
         topMenuLayout.setHorizontalGroup(
-                topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(topMenuLayout.createSequentialGroup()
-                        .addComponent(quitPlay)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(topMenuLayout.createSequentialGroup()
-                        .addComponent(timer)
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(score))
-                        .addComponent(timerProgress, GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pauseGame)
-                        .addContainerGap())
+            topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(topMenuLayout.createSequentialGroup()
+                .addComponent(resumGame)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(topMenuLayout.createSequentialGroup()
+                .addComponent(timer)
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(score))
+                .addComponent(timerProgress, GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pauseGame)
+                .addContainerGap())
         );
         topMenuLayout.setVerticalGroup(
-                topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(topMenuLayout.createSequentialGroup()
-                        .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(timer)
-                        .addComponent(score, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(timerProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
-                        .addGroup(topMenuLayout.createSequentialGroup()
-                        .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(quitPlay,GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pauseGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+            topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(topMenuLayout.createSequentialGroup()
+                .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addComponent(timer)
+                .addComponent(score, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timerProgress, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE))
+                .addGroup(topMenuLayout.createSequentialGroup()
+                .addGroup(topMenuLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addComponent(resumGame,GroupLayout.Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pauseGame, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pikachuPanel = new JPanel();
@@ -127,11 +208,12 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (!(e.getSource() instanceof Pikachu)){
             switch (e.getActionCommand()){
-                case "Menu" : if (playGameListener!=null){
-                    playGameListener.onMenuClicked();
+                case BT_RESUM : if (playGameListener!=null){
+                    playGameListener.onReplayClicked();
                 } break;
-                case "Pause" : if (playGameListener!=null){
-                    playGameListener.onPauseClicked();
+                case BT_PAUSE : if (playGameListener!=null){
+                    isPlaying = !isPlaying;
+                    playGameListener.onPauseClicked(isPlaying);
                 } break;
                 default: break;
             }
@@ -157,7 +239,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         }
     }
 
-    public void renderMatrix(int[][] matrix){
+    public void renderMap(int[][] matrix){
         pikachuIcon = new Pikachu[row][col];
         pikachuPanel.removeAll();
         pikachuPanel.invalidate();
@@ -173,7 +255,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         pikachuPanel.repaint();
     }
 
-    public void updateMaxtrix(int[][] matrix){
+    public void updateMap(int[][] matrix){
         for (int i = 0;i < row;i++){
             for (int j = 0; j < col;j++){
                 pikachuIcon[i][j].setIcon(getIcon(matrix[i][j]));
@@ -211,17 +293,33 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         this.score.setText(score);
     }
 
+    public void setCountClicked(int value){
+        this.countClicked = value;
+    }
+
+    public void updateProgress(int progress){
+        timerProgress.setValue(progress);
+    }
+
+    public JLabel getTimer() {
+        return timer;
+    }
+
+    public JLabel getScore() {
+        return score;
+    }
+
     public interface PlayGameListener{
 
         /**
          *
          */
-        void onMenuClicked();
+        void onReplayClicked();
 
         /**
          * Được gọi khi nhấn Pause
          */
-        void onPauseClicked();
+        void onPauseClicked(boolean isPlaying);
 
         /**
          *
