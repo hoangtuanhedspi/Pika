@@ -16,7 +16,7 @@ public class Utils {
     public static final String BT_REPLAY = "replay";
     public static final String BT_PAUSE = "pause";
     public static final int MAP_ROW = 8;
-    public static final int MAP_COL = 10;
+    public static final int MAP_COL = 12;
     public static final boolean DEBUG = true;
 
     public static void debug(Class clz,String debug){

@@ -84,12 +84,12 @@ public class Matrix {
         Random random = new Random();
         for (int i = 1; i < row - 1; i++) {
             for (int j = 1; j < col - 1; j++) {
-                matrix[i][j] = random.nextInt((row - 2) * (col - 2) / 4 - 1) + 1;
+                matrix[i][j] = random.nextInt(25) +1;
             }
         }
 
         /*Dinh dang lai Matrix */
-        for (int i = 1; i <= (row - 2) * (col - 2) / 4; i++) {
+        for (int i = 1; i <= 25; i++) {
             if (demPT(i) % 2 != 0) {
                 change(i);
             }
