@@ -317,32 +317,33 @@ public class Matrix {
 
         return false; // tra ve false neu khong tim thay duong di 
     }
-    public static void main(String[] args) {
-        Matrix m = new Matrix(6, 10);
-        for (int j = 1; j <= 6; j++) {
-            m.setXY(1, j, 0);
-        }
-        for(int i = 1; i <= 4; i++)
-            m.setXY(i, 5, 0);
-        }
-          
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 10; j++) {
-                if (j == 9) {
-                    System.out.print(m.matrix[i][j] + "\n");
-                } else {
-                    System.out.print(m.matrix[i][j] + "  ");
-                }
-            }
-        }
-        Scanner sc = new Scanner(System.in);
-        int x1, x2, y1, y2;
-        x1 = sc.nextInt();
-        y1 = sc.nextInt();
-        x2 = sc.nextInt();
-        y2 = sc.nextInt();
-        Pikachu p1 = new Pikachu(x1, y1);
-        Pikachu p2 = new Pikachu(x2, y2);
-        System.out.println(m.algorithm(p1, p2));
-    }
+//    public static void main(String[] args) {
+//        Matrix m = new Matrix(6, 10);
+//        for (int j = 1; j <= 6; j++) {
+//            m.setXY(1, j, 0);
+//        }
+//        for(int i = 1; i <= 4; i++)
+//            m.setXY(i, 5, 0);
+//        }
+//          
+//        for (int i = 0; i < 6; i++) {
+//            for (int j = 0; j < 10; j++) {
+//                if (j == 9) {
+//                    System.out.print(m.matrix[i][j] + "\n");
+//                } else {
+//                    System.out.print(m.matrix[i][j] + "  ");
+//                }
+//            }
+//        }
+//        Scanner sc = new Scanner(System.in);
+//        int x1, x2, y1, y2;
+//        x1 = sc.nextInt();
+//        y1 = sc.nextInt();
+//        x2 = sc.nextInt();
+//        y2 = sc.nextInt();
+//        Pikachu p1 = new Pikachu(x1, y1);
+//        Pikachu p2 = new Pikachu(x2, y2);
+//        System.out.println(m.algorithm(p1, p2));
+//    }
+
 }
