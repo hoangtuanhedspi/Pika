@@ -51,6 +51,13 @@ public class Matrix {
     public void setMatrix(int[][] matrix) {
         this.matrix = matrix;
     }
+    // them phuong thuc set value tai toa do cua pikachu
+    public void setXY( Pikachu pikachu, int value){
+        this.matrix[pikachu.getXPoint()][pikachu.getYPoint()] = value;
+    }
+    public int getXY( Pikachu pikachu){
+        return matrix[pikachu.getXPoint()][pikachu.getYPoint()];
+    }
 
     public Matrix(int row, int col) {
         this.setCol(col);

@@ -30,6 +30,18 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     private Pikachu one;
     private Pikachu two;
 
+// them 2 phuong thuc getter
+    public void setCountClicked(int value){
+        this.countClicked = value;
+    }
+    public JLabel getTimer() {
+        return timer;
+    }
+
+    public JLabel getScore() {
+        return score;
+    }
+
     public PlayGameView(){
         this(10,10);
     }
@@ -60,7 +72,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         timerProgress = new JProgressBar(0,100);
         timer = new JLabel("Time: 100");
         timer.setForeground(Color.WHITE);
-        score = new JLabel("Score: 100");
+        score = new JLabel("Score: 0");
         score.setForeground(Color.WHITE);
         pauseGame = new JButton("Pause");
         pauseGame.addActionListener(this);
@@ -124,7 +136,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 default: break;
             }
         }else{
-            countClicked +=1;
+            ++countClicked;
             switch (countClicked){
                 case 1: one = (Pikachu) e.getSource();
                         if (playGameListener!=null)
@@ -136,8 +148,10 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                                 playGameListener.onPikachuClicked(countClicked,one,two);
                         }else {
                             Utils.debug(getClass(),"Remove border");
+                            one.removeBorder();
                         }
-                        countClicked = 0;break;
+                        countClicked = 0;
+                        break;
                 default: break;
             }
         }
@@ -152,6 +166,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 pikachuIcon[i][j] = createButton(i ,j);
                 Icon icon = getIcon(matrix[i][j]);
                 pikachuIcon[i][j].setIcon(icon);
+                pikachuIcon[i][j].drawBorder(Color.white);
                 pikachuPanel.add(pikachuIcon[i][j]);
             }
         }
