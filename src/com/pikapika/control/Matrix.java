@@ -14,7 +14,6 @@ import java.util.Scanner;
  * @author Ronaldo Hanh
  */
 public class Matrix {
-
     private int matrix[][];
     private static final int CONST_VALUE = 0; //Mac dinh nhung o khong co anh co value  = 0
     private int row;

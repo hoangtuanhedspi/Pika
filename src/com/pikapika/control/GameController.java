@@ -11,23 +11,70 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
-import javax.swing.border.LineBorder;
+
+import static com.pikapika.utils.Utils.MAP_COL;
+import static com.pikapika.utils.Utils.MAP_ROW;
 
 /**
  * Created by anonymousjp on 5/20/17.
  */
 public class GameController extends JFrame {
 
+    /**
+     *
+     */
     private SplashView splashView;
-    private MenuView menuView;
-    private PlayGameView playGameView;
-    private Matrix matrix;      // @Hien add
-    private Timer timer;
-    private int countDown;      // thoi gian dem nguoc
-    private int score;          // diem
-    private int mapNumber;      // stt map
-    private int coupleDone;     // so cap da chon dung
 
+    /**
+     *
+     */
+    private MenuView menuView;
+
+    /**
+     *
+     */
+    private PlayGameView playGameView;
+
+    /**
+     *
+     */
+    private Matrix matrix;
+
+    /**
+     *
+     */
+    private Timer timer;
+
+    /**
+     *
+     */
+    private int countDown;
+
+    /**
+     *
+     */
+    private int score;
+
+    /**
+     *
+     */
+    private int mapNumber;
+
+    /**
+     *
+     */
+    private int coupleDone;
+
+    /**
+     *
+     */
+    private ActionListener timeAction;
+
+    /**
+     *
+     * @param title Hiển thị tên cửa sổ game mới
+     * @throws HeadlessException Không báo lỗi
+     */
     public GameController(String title) throws HeadlessException {
         super(title);
         setResizable(false);
@@ -37,14 +84,24 @@ public class GameController extends JFrame {
     @Override
     protected void frameInit() {
         super.frameInit();
+
+        //Khởi tạo splash view
         this.splashView = new SplashView("../resources/splash_background.png");
         this.splashView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
+
+        //Khởi tạo menu view
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(8, 10); 
-        this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.matrix = new Matrix(8, 10);
 
+        //Khởi tạo màn chơi
+        this.playGameView = new PlayGameView(MAP_ROW, MAP_COL);
+        this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
+
+        //Khởi tạo ma trận thuật toán
+        this.matrix = new Matrix(MAP_ROW, MAP_COL);
+
+
+        //
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
             public void onStartLoading() {
@@ -63,19 +120,23 @@ public class GameController extends JFrame {
             }
         });
 
+        //
         menuView.setOnClickMenuListener(new MenuView.OnClickMenuListener() {
             @Override
             public void onNewGameClicked(int type) {
                 menuView.setVisible(false);
                 playGameView.renderMap(matrix.getMatrix());
+
                 int i = (new Random()).nextInt(5);
                 playGameView.setBackgroundImage("../resources/bg_"+i+".png");
                 playGameView.setVisible(true);
+
                 score = 0;
                 mapNumber = 0;
                 countDown = 100;
                 coupleDone = 0;
-                ActionListener timeAction = new ActionListener() {
+
+                timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
@@ -158,8 +219,7 @@ public class GameController extends JFrame {
                                 playGameView.updateScore("Score: "+score);
                                 playGameView.updateTimer("Time: "+countDown);
                                 playGameView.validate();
-                            }
-                            else{  // mapNumber == 3
+                            }else{  // mapNumber == 3
                                 // TODO : chuc mung chien thang!
                             }
 
@@ -179,6 +239,9 @@ public class GameController extends JFrame {
         this.add(playGameView, BorderLayout.CENTER);
     }
 
+    /**
+     *
+     */
     public void start() {
         splashView.start();
         setVisible(true);
