@@ -11,10 +11,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.LineBorder;
+
 /**
  * Created by anonymousjp on 5/20/17.
  */
-public class GameController extends JFrame{
+public class GameController extends JFrame {
+
     private SplashView splashView;
     private MenuView menuView;
     private PlayGameView playGameView;
@@ -31,20 +33,17 @@ public class GameController extends JFrame{
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
-
-
     @Override
     protected void frameInit() {
         super.frameInit();
         this.splashView = new SplashView("../resources/splash_background.png");
-        this.splashView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
+        this.splashView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
-        this.menuView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(8,10);
-        this.playGameView.setSize(Utils.WINDOW_WIDTH,Utils.WINDOW_HEIGHT);
+        this.menuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
+        this.playGameView = new PlayGameView(8, 10); 
+        this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
 //        test = new int[10][10];
         this.matrix = new Matrix(8, 10);    // @Hien add
-
 
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
@@ -79,15 +78,15 @@ public class GameController extends JFrame{
                 playGameView.setVisible(true);
 //                @Hien add
                 score = 0;
-                mapNumber = 1;
+                mapNumber = 0;
                 countDown = 100;
                 coupleDone = 0;
                 ActionListener timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
-                        playGameView.updateTimer("Time: "+countDown);
-                        if(countDown == 0){
+                        playGameView.updateTimer("Time: " + countDown);
+                        if (countDown == 0) {
                             JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
                             timer.stop();
                         }
@@ -95,7 +94,7 @@ public class GameController extends JFrame{
                 };
                 timer = new Timer(1000, timeAction);
                 timer.start();
-                
+
             }
 
             @Override
@@ -126,30 +125,49 @@ public class GameController extends JFrame{
             public void onPikachuClicked(int clickCounter, Pikachu... pikachus) {
 
                 // TODO
-                Utils.debug(getClass(),clickCounter+"");
-                if(clickCounter == 1){
-                    Utils.debug(this.getClass(),""+matrix.getXY(pikachus[0]));
+                Utils.debug(getClass(), clickCounter + "");
+                if (clickCounter == 1) {
+                    Utils.debug(this.getClass(), "" + matrix.getXY(pikachus[0]));
                 }
-                if (clickCounter==2){
-                    Utils.debug(this.getClass(),""+matrix.getXY(pikachus[1]));
+                if (clickCounter == 2) {
+                    Utils.debug(this.getClass(), "" + matrix.getXY(pikachus[1]));
 
                 }
-                
-                if(clickCounter == 1){
-                    pikachus[0].drawBorder();
-                }
-                else if(clickCounter == 2){
-                    pikachus[1].drawBorder();
-                    if(matrix.Algorithm(pikachus[0], pikachus[1])){
+
+                if (clickCounter == 1) {
+                    pikachus[0].drawBorder(Color.red);
+                } else if (clickCounter == 2) {
+                    pikachus[1].drawBorder(Color.red);
+                    if (matrix.Algorithm(pikachus[0], pikachus[1])) {
                         matrix.setXY(pikachus[0], 0);
                         matrix.setXY(pikachus[1], 0);
                         pikachus[0].setVisible(false);
                         pikachus[1].setVisible(false);
                         coupleDone++;
                         score += 100;
-                        playGameView.getScore().setText("Score: "+score);
-                    }
-                    else{
+                        playGameView.getScore().setText("Score: " + score);
+                        if (coupleDone == (matrix.getRow()) * (matrix.getCol()) / 2) {
+                            ++mapNumber;
+                            if (mapNumber < 3) {  // tinh tu 0, 1, 2
+                                countDown -= 15 * mapNumber;
+                                String timeStr = playGameView.getTimer().getText();
+                                int timeCur = Integer.parseInt(timeStr.substring(6));
+                                score = timeCur * 10 + 500;
+                                coupleDone = 0;
+                                
+                                // TODO: Chuyen map moi
+                                playGameView.removeAll();
+                                playGameView = new PlayGameView(8, 10);
+                                playGameView.updateScore("Score: "+score);
+                                playGameView.updateTimer("Time: "+countDown);
+                                playGameView.validate();
+                            }
+                            else{  // mapNumber == 3
+                                // TODO : chuc mung chien thang!
+                            }
+
+                        }
+                    } else {
                         pikachus[0].removeBorder();
                         pikachus[1].removeBorder();
                         playGameView.setCountClicked(0);
@@ -159,12 +177,12 @@ public class GameController extends JFrame{
             }
         });
 
-        this.add(splashView,BorderLayout.CENTER);
-        this.add(menuView,BorderLayout.CENTER);
-        this.add(playGameView,BorderLayout.CENTER);
+        this.add(splashView, BorderLayout.CENTER);
+        this.add(menuView, BorderLayout.CENTER);
+        this.add(playGameView, BorderLayout.CENTER);
     }
 
-    public void start(){
+    public void start() {
         splashView.start();
         setVisible(true);
     }

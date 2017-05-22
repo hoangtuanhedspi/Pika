@@ -166,6 +166,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                 pikachuIcon[i][j] = createButton(i ,j);
                 Icon icon = getIcon(matrix[i][j]);
                 pikachuIcon[i][j].setIcon(icon);
+                pikachuIcon[i][j].drawBorder(Color.white);
                 pikachuPanel.add(pikachuIcon[i][j]);
             }
         }

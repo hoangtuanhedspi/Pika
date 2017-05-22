@@ -3,10 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/Test.java</file>
-            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/view/JpanelBackground.java</file>
-            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/utils/Utils.java</file>
-            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/Main.java</file>
+            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/control/Matrix.java</file>
+            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/control/GameController.java</file>
+            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/view/Pikachu.java</file>
+            <file>file:/D:/Viet_Nhat/ki_6/oop/NetBeans/Pika/src/com/pikapika/view/PlayGameView.java</file>
         </group>
     </open-files>
 </project-private>

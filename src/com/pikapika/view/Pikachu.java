@@ -28,11 +28,11 @@ public class Pikachu extends JButton{
         return yPoint;
     }
 
-    public void drawBorder(){
-        this.setBorder(new LineBorder(Color.RED, 2));
+    public void drawBorder(Color color){
+        this.setBorder(new LineBorder(color, 2));
     }
 
     public void removeBorder(){
-        this.setBorder(null);
+        this.drawBorder(Color.white);
     }
 }
