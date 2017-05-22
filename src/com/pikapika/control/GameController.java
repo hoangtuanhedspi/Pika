@@ -134,7 +134,7 @@ public class GameController extends JFrame {
                 coupleDone = 0;
 
                 playGameView.updateScore("Score: "+score);
-                ActionListener timeAction = new ActionListener() {
+                timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         --countDown;
@@ -228,15 +228,12 @@ public class GameController extends JFrame {
                                 JOptionPane.showMessageDialog(null, " CHUC MUNG WINNER !");
                                 playGameView.setVisible(false);
                                 menuView.setVisible(true);
-
                             }
-
                         }
                     } else {
                         pikachus[0].removeBorder();
                         pikachus[1].removeBorder();
                         playGameView.setCountClicked(0);
-
                     }
                 }
             }
