@@ -144,7 +144,7 @@ public class GameController extends JFrame {
                         coupleDone++;
                         score += 100;
                         playGameView.getScore().setText("Score: " + score);
-                        if (coupleDone == (matrix.getRow()) * (matrix.getCol()) / 2) {
+                        if (coupleDone == (matrix.getRow()-2) * (matrix.getCol()-2) / 2) {
                             ++mapNumber;
                             if (mapNumber < 3) {  // tinh tu 0, 1, 2
                                 countDown -= 15 * mapNumber;
