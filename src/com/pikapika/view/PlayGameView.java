@@ -259,6 +259,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         for (int i = 1;i <= row-2; i++){
             for (int j = 1; j <= col-2; j++){
                 pikachuIcon[i][j].setIcon(getIcon(matrix[i][j]));
+                pikachuIcon[i][j].setVisible(true);
             }
         }
         pikachuPanel.invalidate();
