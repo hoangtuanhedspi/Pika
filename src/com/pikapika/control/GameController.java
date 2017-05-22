@@ -49,14 +49,16 @@ public class GameController extends JFrame {
      *
      */
     private int countDown;
+    private int countDown2; // luu muc do choi
 
     /**
      *
      */
-    private int score;
-
+    private int score;  // luu score cong them 100 moi lan chon dung
+    
+    private int scoreSum;  
     /**
-     *
+     * luu score cua man choi truoc do, scoreHienTai = scoreSum + score;
      */
     private int mapNumber;
 
@@ -129,11 +131,28 @@ public class GameController extends JFrame {
                 playGameView.setVisible(true);
 
                 score = 0;
+                scoreSum = 0;
                 mapNumber = 0;
-                countDown = 100;
                 coupleDone = 0;
-
+                switch(type){   // tinh time thoi muc do choi
+                    case MenuView.TYPE_EASY:
+                        countDown2 = 120;
+                        break;
+                    case MenuView.TYPE_MEDIUM:
+                        countDown2 = 100;
+                        break;
+                    case MenuView.TYPE_HARD:
+                        countDown2 = 80;
+                        break;
+                    default:
+                        break;
+                }
+                countDown = countDown2;
                 playGameView.updateScore("Score: "+score);
+
+                playGameView.updateTimer("Time: "+countDown);
+                playGameView.updateMapNum("Map: "+(mapNumber+1));
+
                 timeAction = new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -207,20 +226,21 @@ public class GameController extends JFrame {
                         pikachus[1].setVisible(false);
                         coupleDone++;
                         score += 100;
-                        playGameView.getScore().setText("Score: " + score);
+                        playGameView.updateScore("Score: " + (scoreSum+score));
                         if (coupleDone == (matrix.getRow()-2) * (matrix.getCol()-2) / 2) {
                             ++mapNumber;
                             if (mapNumber < 3) {  // tinh tu 0, 1, 2
-                                countDown = 100 - 15 * mapNumber;
+                                countDown = countDown2 - 10 * mapNumber;
                                 String timeStr = playGameView.getTimer().getText();
                                 int timeCur = Integer.parseInt(timeStr.substring(6));
-                                score += timeCur * 10 + 500;
+                                scoreSum += timeCur * 10 + 500;
+                                score = 0;
                                 coupleDone = 0;
-
                                 // TODO: Chuyen map moi
                                 playGameView.updateMap(matrix.renderMatrix());
-                                playGameView.updateScore("Score: "+score);
+                                playGameView.updateScore("Score: "+scoreSum);
                                 playGameView.updateTimer("Time: "+countDown);
+                                playGameView.updateMapNum("Map: "+(mapNumber+1));
                                 playGameView.validate();
                             }else{  // mapNumber == 3
                                 // TODO : chuc mung chien thang!
@@ -230,7 +250,7 @@ public class GameController extends JFrame {
                                 menuView.setVisible(true);
                             }
                         }
-                    } else {
+                    } else { // 2 pikachu khác nhau
                         pikachus[0].removeBorder();
                         pikachus[1].removeBorder();
                         playGameView.setCountClicked(0);

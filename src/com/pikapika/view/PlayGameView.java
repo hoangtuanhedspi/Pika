@@ -304,6 +304,9 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     public void updateScore(String score){
         this.score.setText(score);
     }
+    public void updateMapNum(String  map){
+        this.mapCount.setText(map);
+    }
 
     public void setCountClicked(int value){
         this.countClicked = value;
@@ -315,10 +318,6 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
 
     public JLabel getTimer() {
         return timer;
-    }
-
-    public JLabel getScore() {
-        return score;
     }
 
     public interface PlayGameListener{
