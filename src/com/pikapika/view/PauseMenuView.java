@@ -1,12 +1,9 @@
 package com.pikapika.view;
 
-import sun.jvm.hotspot.ui.GraphicsUtilities;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 import static com.pikapika.utils.Utils.BT_CONTINUE;
 import static com.pikapika.utils.Utils.BT_BACK_MENU;
