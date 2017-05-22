@@ -345,4 +345,5 @@ public class Matrix {
 //        Pikachu p2 = new Pikachu(x2, y2);
 //        System.out.println(m.algorithm(p1, p2));
 //    }
+
 }
