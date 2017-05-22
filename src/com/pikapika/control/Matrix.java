@@ -152,8 +152,6 @@ public class Matrix {
 
     //Xet duyet theo chieu ngang
     private boolean checkRecX(Pikachu p1, Pikachu p2) {
-        //System.out.println("checkRecX(p1, p2)");
-//        System.out.println("check rect x");
         Pikachu pMinY = p1;
         Pikachu pMaxY = p2;
         if (p1.getYPoint() > p2.getYPoint()) {
@@ -192,7 +190,6 @@ public class Matrix {
                     && checkLineX(pMinX.getYPoint(), pMaxX.getYPoint(), x)
                     && checkLineY(x, pMaxX.getXPoint(), pMaxX.getYPoint())
                     && matrix[p1.getXPoint()][p1.getYPoint()] == matrix[p2.getXPoint()][p2.getYPoint()]) {
-
                 return true;
             }
         }
@@ -207,7 +204,7 @@ public class Matrix {
         if(matrix[p1.getXPoint()][p1.getYPoint()] != matrix[p2.getXPoint()][p2.getYPoint()]){
             return false;
         }
-//        System.out.println("check more x");
+
         Pikachu pMinY = p1, pMaxY = p2;
         if (p1.getYPoint() > p2.getYPoint()) {
             pMinY = p2;
@@ -239,11 +236,10 @@ public class Matrix {
 
     private boolean checkMoreLineY(Pikachu p1, Pikachu p2, int type) {
         //System.out.println("checkMoreLineY(p1, p2, "+ type + " )");
-
         if(matrix[p1.getXPoint()][p1.getYPoint()] != matrix[p2.getXPoint()][p2.getYPoint()]){
             return false;
         }
-//        System.out.println("check more y");
+
         Pikachu pMinX = p1, pMaxX = p2;
         if (p1.getXPoint() > p2.getXPoint()) {
             pMinX = p2;
@@ -271,6 +267,7 @@ public class Matrix {
         }
         return false;
     }
+          
     /*Algorithm cho 2 diem*/
     public boolean algorithm(Pikachu p1, Pikachu p2) {
         // Kiem tra voi hang x , cot y1,y2 
@@ -327,6 +324,8 @@ public class Matrix {
         }
         for(int i = 1; i <= 4; i++)
             m.setXY(i, 5, 0);
+        }
+          
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 10; j++) {
                 if (j == 9) {
@@ -346,5 +345,4 @@ public class Matrix {
         Pikachu p2 = new Pikachu(x2, y2);
         System.out.println(m.algorithm(p1, p2));
     }
-
 }
