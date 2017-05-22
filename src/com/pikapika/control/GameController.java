@@ -41,10 +41,9 @@ public class GameController extends JFrame {
         this.splashView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
         this.menuView = new MenuView("../resources/menu_bg.png");
         this.menuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.playGameView = new PlayGameView(4, 6); 
+        this.playGameView = new PlayGameView(8, 12); 
         this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
-        this.matrix = new Matrix(4, 6);
-
+        this.matrix = new Matrix(8, 12);
         this.splashView.setLoadingListener(new SplashView.OnLoadingListener() {
             @Override
             public void onStartLoading() {
@@ -84,8 +83,11 @@ public class GameController extends JFrame {
                         playGameView.updateProgress(countDown);
                         playGameView.updateTimer("Time: " + countDown);
                         if (countDown == 0) {
-                            JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
                             timer.stop();
+                            JOptionPane.showMessageDialog(null, "TIME OUT, GAME OVER!");
+                            playGameView.setVisible(false);
+                            menuView.setVisible(true);
+                            
                         }
                     }
                 };
