@@ -14,6 +14,8 @@ import java.util.Random;
 
 import static com.pikapika.utils.Utils.MAP_COL;
 import static com.pikapika.utils.Utils.MAP_ROW;
+import com.pikapika.view.PauseMenuView;
+import com.pikapika.view.PauseMenuView.PauseMenuListener;
 
 /**
  * Created by anonymousjp on 5/20/17.
@@ -34,6 +36,9 @@ public class GameController extends JFrame {
      *
      */
     private PlayGameView playGameView;
+    
+    private PauseMenuView pauseMenuView;
+    
 
     /**
      *
@@ -98,6 +103,9 @@ public class GameController extends JFrame {
         //Khởi tạo màn chơi
         this.playGameView = new PlayGameView(MAP_ROW, MAP_COL);
         this.playGameView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
+        
+        this.pauseMenuView = new PauseMenuView("../resources/menu_bg.png");
+        this.pauseMenuView.setSize(Utils.WINDOW_WIDTH, Utils.WINDOW_HEIGHT);
 
         //Khởi tạo ma trận thuật toán
         this.matrix = new Matrix(MAP_ROW, MAP_COL);
@@ -207,8 +215,8 @@ public class GameController extends JFrame {
                 Utils.debug(GameController.this.getClass(),isPlaying+"");
                 if (!isPlaying){
                     timer.stop();
-                    menuView.setVisible(true);
                     playGameView.setVisible(false);
+                    pauseMenuView.setVisible(true);
                 }
             }
 
@@ -270,10 +278,33 @@ public class GameController extends JFrame {
                 }
             }
         });
+        
+        this.pauseMenuView.setPauseMenuListener(new PauseMenuListener(){
+            @Override
+            public void onContinueCliked() {
+                pauseMenuView.setVisible(false);
+                playGameView.setVisible(true);
+                timer.start();
+            }
+
+            @Override
+            public void onBackMenuClicked() {
+                pauseMenuView.setVisible(false);
+                menuView.setVisible(true);
+            }
+
+            @Override
+            public void onQuitClicked() {
+                dispose();
+                System.exit(0);
+            }
+            
+        });
 
         this.add(splashView, BorderLayout.CENTER);
         this.add(menuView, BorderLayout.CENTER);
         this.add(playGameView, BorderLayout.CENTER);
+        this.add(pauseMenuView, BorderLayout.CENTER);
     }
 
     /**
