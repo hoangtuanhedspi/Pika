@@ -149,7 +149,6 @@ public class GameController extends JFrame {
                 }
                 countDown = countDown2;
                 playGameView.updateScore("Score: "+score);
-
                 playGameView.updateTimer("Time: "+countDown);
                 playGameView.updateMapNum("Map: "+(mapNumber+1));
 
@@ -188,6 +187,19 @@ public class GameController extends JFrame {
             @Override
             public void onReplayClicked() {
                 //TODO: Resum old game
+                playGameView.updateMap(matrix.renderMatrix());
+                
+                int i = (new Random()).nextInt(5);
+                playGameView.setBackgroundImage("../resources/bg_"+i+".png");
+                score = 0;
+                scoreSum = 0;
+                mapNumber = 0;
+                coupleDone = 0;
+                countDown = countDown2;
+                playGameView.updateScore("Score: "+score);
+                playGameView.updateTimer("Time: "+countDown);
+                playGameView.updateMapNum("Map: "+(mapNumber+1));
+                
             }
 
             @Override
