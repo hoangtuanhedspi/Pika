@@ -25,6 +25,7 @@ public class PauseMenuView extends JpanelBackground implements ActionListener{
 
     public PauseMenuView(String imagePath) {
         super(imagePath);
+        setVisible(false);
         initUI();
     }
 
