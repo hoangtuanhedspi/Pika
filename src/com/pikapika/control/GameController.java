@@ -1,5 +1,6 @@
 package com.pikapika.control;
 
+import com.apple.eawt.Application;
 import com.pikapika.utils.Utils;
 import com.pikapika.view.MenuView;
 import com.pikapika.view.Pikachu;
@@ -87,6 +88,9 @@ public class GameController extends JFrame {
      */
     public GameController(String title) throws HeadlessException {
         super(title);
+        Image icon = (new ImageIcon(getClass().getResource("../resources/pika_icon.png"))).getImage();
+        setIconImage(icon);
+        Application.getApplication().setDockIconImage(icon);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
@@ -242,6 +246,12 @@ public class GameController extends JFrame {
                         score += 100;
 
                         playGameView.updateScore("Score: " + score);
+
+                        if (!matrix.canPlay() && coupleDone < (matrix.getRow()-2) * (matrix.getCol()-2) / 2){
+                            JOptionPane.showMessageDialog(null, "Không thể chơi tiếp!");
+                            playGameView.setVisible(false);
+                            menuView.setVisible(true);
+                        }
 
                         if (coupleDone == (matrix.getRow()-2) * (matrix.getCol()-2) / 2) {
                             ++mapNumber;
