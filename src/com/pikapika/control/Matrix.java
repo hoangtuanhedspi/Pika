@@ -10,6 +10,8 @@ import com.pikapika.view.Pikachu;
 import java.util.Random;
 import java.util.Scanner;
 
+import static com.pikapika.utils.Utils.PIKACHU_NUMBER;
+
 /**
  *
  * @author Ronaldo Hanh
@@ -86,14 +88,14 @@ public class Matrix {
         for (int i = 1; i < row - 1; i++) {
             for (int j = 1; j < col - 1; j++) {
 
-                matrix[i][j] = random.nextInt(34) + 1;
+                matrix[i][j] = random.nextInt(PIKACHU_NUMBER) + 1;
             }
         }
 
         Utils.debug(getClass(),(row - 2) * (col - 2) / 4 - 1+"");
 
         /*Dinh dang lai Matrix */
-        for (int i = 1; i <= 34; i++) {
+        for (int i = 1; i <= PIKACHU_NUMBER+1; i++) {
             if (demPT(i) % 2 != 0) {
                 change(i);
             }
@@ -265,7 +267,6 @@ public class Matrix {
         if (matrix[p1.getXPoint()][p1.getYPoint()] == matrix[p2.getXPoint()][p2.getYPoint()]) {
             if (p1.getXPoint() == p2.getXPoint()) {
                 if (this.checkLineX(p1.getYPoint(), p2.getYPoint(), p1.getXPoint())) {
-
                     return true;
                 }
             }
@@ -308,5 +309,26 @@ public class Matrix {
             }
         }
         return false; // tra ve false neu khong tim thay duong di 
+    }
+
+    public boolean canPlay(){
+        for (int i = 1; i < row-1; i++){
+            for ( int j = 1; j < col-1;j++){
+                if (matrix[i][j]!=0){
+                    for (int m = 1 ; m < row -1; m++){
+                        for (int n = 1; n < col-1; n++){
+                            Utils.debug(getClass(),i+":"+j+" -> " + m + ":"+n);
+                            if ((m!=i || n!=j) && matrix[m][n]!=0 && matrix[m][n] == matrix[i][j]){
+                                if (algorithm(new Pikachu(m,n),new Pikachu(i,j))){
+                                    Utils.debug(getClass(),"Go: "+i+":"+j+" -> " + m + ":"+n);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

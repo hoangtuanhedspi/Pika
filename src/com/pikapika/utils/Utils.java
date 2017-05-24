@@ -19,6 +19,7 @@ public class Utils {
     public static final String BT_BACK_MENU = "Back Menu";
     public static final int MAP_ROW = 8;
     public static final int MAP_COL = 12;
+    public static final int PIKACHU_NUMBER = 34;
     public static final boolean DEBUG = true;
 
     public static void debug(Class clz,String debug){
