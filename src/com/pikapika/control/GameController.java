@@ -247,6 +247,7 @@ public class GameController extends JFrame {
                         playGameView.updateScore("Score: " + score);
 
                         if (!matrix.canPlay() && coupleDone < (matrix.getRow()-2) * (matrix.getCol()-2) / 2){
+                            timer.stop();
                             JOptionPane.showMessageDialog(null, "Không thể chơi tiếp!");
                             playGameView.setVisible(false);
                             menuView.setVisible(true);
