@@ -159,7 +159,7 @@ public class GameController extends JFrame {
                 menuView.setVisible(false);
 
                 //Khởi tạo màn chơi mới
-                playGameView.renderMap(matrix.getMatrix());
+                playGameView.renderMap(matrix.renderMatrix());
 
                 int i = (new Random()).nextInt(5);
                 playGameView.setBackgroundImage("../resources/bg_"+i+".png");
@@ -186,7 +186,6 @@ public class GameController extends JFrame {
                 playGameView.updateScore("Score: "+score);
                 playGameView.updateTimer("Time: "+countDown);
                 playGameView.updateMapNum("Map: "+mapNumber);
-
                 playGameView.setVisible(true);
                 timer.start();
             }
@@ -255,15 +254,18 @@ public class GameController extends JFrame {
 
                         if (coupleDone == (matrix.getRow()-2) * (matrix.getCol()-2) / 2) {
                             ++mapNumber;
-                            if (mapNumber < 3) {
-                                countDown = playGameView.getMaxCountDown() - 10 * mapNumber;
+                            if (mapNumber <= 3) {
+                                score = countDown*10 + 500;
                                 scoreSum += score;
+                                score = scoreSum;
+                                countDown = playGameView.getMaxCountDown() - 10 * mapNumber;
                                 coupleDone = 0;
 
                                 playGameView.updateMaxProgress(countDown);
                                 playGameView.updateMap(matrix.renderMatrix());
                                 playGameView.updateTimer("Time: "+countDown);
                                 playGameView.updateMapNum("Map: "+mapNumber);
+                                playGameView.updateScore("Score: "+ score);
                             }else{
                                 // TODO : chuc mung chien thang!
                                 timer.stop();

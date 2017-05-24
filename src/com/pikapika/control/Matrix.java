@@ -10,6 +10,8 @@ import com.pikapika.view.Pikachu;
 import java.util.Random;
 import java.util.Scanner;
 
+import static com.pikapika.utils.Utils.PIKACHU_NUMBER;
+
 /**
  *
  * @author Ronaldo Hanh
@@ -86,14 +88,14 @@ public class Matrix {
         for (int i = 1; i < row - 1; i++) {
             for (int j = 1; j < col - 1; j++) {
 
-                matrix[i][j] = random.nextInt(34) + 1;
+                matrix[i][j] = random.nextInt(PIKACHU_NUMBER) + 1;
             }
         }
 
         Utils.debug(getClass(),(row - 2) * (col - 2) / 4 - 1+"");
 
         /*Dinh dang lai Matrix */
-        for (int i = 1; i <= 34; i++) {
+        for (int i = 1; i <= PIKACHU_NUMBER+1; i++) {
             if (demPT(i) % 2 != 0) {
                 change(i);
             }
