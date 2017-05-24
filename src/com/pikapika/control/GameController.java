@@ -1,6 +1,6 @@
 package com.pikapika.control;
 
-import com.apple.eawt.Application;
+//import com.apple.eawt.Application;
 import com.pikapika.utils.Utils;
 import com.pikapika.view.MenuView;
 import com.pikapika.view.Pikachu;
@@ -90,7 +90,7 @@ public class GameController extends JFrame {
         super(title);
         Image icon = (new ImageIcon(getClass().getResource("../resources/pika_icon.png"))).getImage();
         setIconImage(icon);
-        Application.getApplication().setDockIconImage(icon);
+//        Application.getApplication().setDockIconImage(icon);
         setResizable(false);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
