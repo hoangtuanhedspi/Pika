@@ -223,8 +223,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
                     playGameListener.onReplayClicked();
                 } break;
                 case BT_PAUSE : if (playGameListener!=null){
-                    isPlaying = !isPlaying;
-                    playGameListener.onPauseClicked(isPlaying);
+                    playGameListener.onPauseClicked();
                 } break;
                 default: break;
             }
@@ -304,6 +303,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
     public void updateScore(String score){
         this.score.setText(score);
     }
+
     public void updateMapNum(String  map){
         this.mapCount.setText(map);
     }
@@ -314,10 +314,24 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
 
     public void updateProgress(int progress){
         timerProgress.setValue(progress);
+        invalidate();
     }
 
-    public JLabel getTimer() {
-        return timer;
+    public void updateMaxProgress(int progess){
+        timerProgress.setMaximum(progess);
+        timerProgress.setValue(progess);
+    }
+
+    public int getMaxCountDown(){
+        return timerProgress.getMaximum();
+    }
+
+    public int getCountDownValue(){
+        return timerProgress.getValue();
+    }
+
+    public String getTextCurrentTime(){
+        return timer.getText();
     }
 
     public interface PlayGameListener{
@@ -330,7 +344,7 @@ public class PlayGameView extends JpanelBackground implements ActionListener{
         /**
          * Được gọi khi nhấn Pause
          */
-        void onPauseClicked(boolean isPlaying);
+        void onPauseClicked();
 
         /**
          *

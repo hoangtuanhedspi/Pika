@@ -1,6 +1,8 @@
 package com.pikapika.view;
 
 
+import com.pikapika.utils.Utils;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,7 +44,7 @@ public class PauseMenuView extends JpanelBackground implements ActionListener{
 
         quitGame = new JButton(BT_QUIT);
         quitGame.setSize(100,30);
-        backMenu.addActionListener(this);
+        quitGame.addActionListener(this);
 
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -55,6 +57,7 @@ public class PauseMenuView extends JpanelBackground implements ActionListener{
                     .addComponent(continueGame, GroupLayout.PREFERRED_SIZE, 360, GroupLayout.PREFERRED_SIZE))
                     .addGap(180, 180, 180))
         );
+
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -74,6 +77,7 @@ public class PauseMenuView extends JpanelBackground implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Utils.debug(getClass(),e.getActionCommand());
         if (pauseMenuListener!=null){
             switch (e.getActionCommand()){
                 case BT_CONTINUE : pauseMenuListener.onContinueCliked(); break;
